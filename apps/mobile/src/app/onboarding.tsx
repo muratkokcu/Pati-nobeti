@@ -6,7 +6,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Screen, ScreenLoading } from '@/components/screen';
 import { BodyText, DisplayText, MetaText, TitleText } from '@/components/typography';
 import type { Pet } from '@/domain/types';
-import { palette, radius, spacing, touchTarget } from '@/design/tokens';
+import { layout, opacity, palette, radius, spacing, touchTarget, typography } from '@/design/tokens';
 import { useRuntime } from '@/state/runtime-context';
 
 export default function OnboardingScreen() {
@@ -82,7 +82,7 @@ export default function OnboardingScreen() {
       {feedback ? <Text accessibilityLiveRegion="polite" style={styles.feedback}>{feedback}</Text> : null}
       <View style={styles.actions}>
         {step > 1 ? <Pressable accessibilityRole="button" disabled={pending} onPress={() => { setFeedback(null); setStep((value) => value - 1); }} style={styles.secondary}><Text style={styles.secondaryText}>Geri</Text></Pressable> : null}
-        <Pressable accessibilityRole="button" accessibilityState={{ disabled: pending }} disabled={pending} onPress={() => step < 3 ? next() : void submit()} style={({ pressed }) => [styles.primary, pressed && styles.pressed, pending && styles.disabled]}><Text style={styles.primaryText}>{pending ? 'Kurulum kontrol ediliyor…' : step < 3 ? 'Devam et' : createdHouseholdId ? 'Haneye git' : creationAttempted ? 'Kurulumu kontrol et' : 'Haneyi kur'}</Text></Pressable>
+        <Pressable accessibilityRole="button" accessibilityState={{ disabled: pending }} disabled={pending} onPress={() => step < 3 ? next() : void submit()} style={({ pressed }) => [styles.primary, pressed && styles.pressedPrimary, pending && styles.disabled]}><Text style={styles.primaryText}>{pending ? 'Kurulum kontrol ediliyor…' : step < 3 ? 'Devam et' : createdHouseholdId ? 'Haneye git' : creationAttempted ? 'Kurulumu kontrol et' : 'Haneyi kur'}</Text></Pressable>
       </View>
       {step === 3 ? <View style={styles.promise}><TitleText>Sonraki değer anı</TitleText><BodyText style={styles.promiseBody}>Hane kurulduktan sonra ikinci bakım vereni davet et. Ortak kayıt hattı, iki kişi katıldığında asıl değerini gösterir.</BodyText></View> : null}
     </View>
@@ -94,11 +94,11 @@ function Field({ label, ...props }: { label: string } & React.ComponentProps<typ
 }
 
 const styles = StyleSheet.create({
-  root: { paddingTop: 56 }, heading: { marginTop: spacing.sm }, intro: { color: palette.muted, marginTop: spacing.md, maxWidth: 560 }, form: { gap: spacing.lg, marginTop: spacing.xxl },
-  label: { color: palette.ink, fontSize: 14, fontWeight: '700', marginBottom: spacing.sm }, input: { backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.md, borderWidth: 1, color: palette.ink, fontSize: 16, minHeight: 52, paddingHorizontal: spacing.lg, paddingVertical: spacing.md }, multiline: { minHeight: 96, textAlignVertical: 'top' },
-  species: { flexDirection: 'row', gap: spacing.sm }, speciesChoice: { alignItems: 'center', borderColor: palette.line, borderRadius: radius.md, borderWidth: 1, flex: 1, justifyContent: 'center', minHeight: touchTarget }, speciesSelected: { backgroundColor: palette.primarySoft, borderColor: palette.primary }, speciesText: { color: palette.muted, fontSize: 14, fontWeight: '700' }, speciesTextSelected: { color: palette.primary },
-  feedback: { color: palette.overdue, fontSize: 14, fontWeight: '600', lineHeight: 20, marginTop: spacing.lg }, actions: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.xl },
-  primary: { alignItems: 'center', backgroundColor: palette.primary, borderRadius: radius.md, flex: 1, justifyContent: 'center', minHeight: touchTarget + 4, paddingHorizontal: spacing.lg }, primaryText: { color: palette.white, fontSize: 16, fontWeight: '700' },
-  secondary: { alignItems: 'center', borderColor: palette.primary, borderRadius: radius.md, borderWidth: 1, justifyContent: 'center', minHeight: touchTarget + 4, paddingHorizontal: spacing.xl }, secondaryText: { color: palette.primary, fontSize: 15, fontWeight: '700' }, pressed: { opacity: 0.78 }, disabled: { opacity: 0.48 },
+  root: { paddingTop: layout.headerOffset }, heading: { marginTop: spacing.sm }, intro: { color: palette.muted, marginTop: spacing.md, maxWidth: layout.measure }, form: { gap: spacing.lg, marginTop: spacing.xxl },
+  label: { ...typography.metaStrong, color: palette.ink, marginBottom: spacing.sm }, input: { backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.md, borderWidth: 1, ...typography.body, color: palette.ink, minHeight: layout.fieldHeight, paddingHorizontal: spacing.lg, paddingVertical: spacing.md }, multiline: { minHeight: 96, textAlignVertical: 'top' },
+  species: { flexDirection: 'row', gap: spacing.sm }, speciesChoice: { alignItems: 'center', borderColor: palette.line, borderRadius: radius.md, borderWidth: 1, flex: 1, justifyContent: 'center', minHeight: touchTarget }, speciesSelected: { backgroundColor: palette.primarySoft, borderColor: palette.primary }, speciesText: { ...typography.metaStrong, color: palette.muted }, speciesTextSelected: { color: palette.primary },
+  feedback: { ...typography.body, color: palette.overdue, marginTop: spacing.lg }, actions: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.xl },
+  primary: { alignItems: 'center', backgroundColor: palette.primary, borderRadius: radius.md, flex: 1, justifyContent: 'center', minHeight: touchTarget + 4, paddingHorizontal: spacing.lg }, primaryText: { ...typography.bodyStrong, color: palette.white },
+  secondary: { alignItems: 'center', borderColor: palette.primary, borderRadius: radius.md, borderWidth: 1, justifyContent: 'center', minHeight: touchTarget + 4, paddingHorizontal: spacing.xl }, secondaryText: { ...typography.bodyStrong, color: palette.primary }, pressedPrimary: { backgroundColor: palette.primaryPressed }, disabled: { opacity: opacity.disabled },
   promise: { backgroundColor: palette.primarySoft, borderRadius: radius.lg, gap: spacing.sm, marginTop: spacing.xxl, padding: spacing.lg }, promiseBody: { color: palette.primary },
 });

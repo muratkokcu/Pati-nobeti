@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Screen } from '@/components/screen';
 import { BodyText, DisplayText } from '@/components/typography';
-import { palette, radius, spacing, touchTarget } from '@/design/tokens';
+import { layout, opacity, palette, radius, spacing, touchTarget, typography } from '@/design/tokens';
 import { useRuntime } from '@/state/runtime-context';
 
 export default function ResetPasswordScreen() {
@@ -39,11 +39,11 @@ export default function ResetPasswordScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { paddingTop: 72 }, intro: { color: palette.muted, marginBottom: spacing.xxl, marginTop: spacing.md },
-  label: { color: palette.ink, fontSize: 14, fontWeight: '700', marginBottom: spacing.sm },
-  input: { backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.md, borderWidth: 1, color: palette.ink, fontSize: 16, marginBottom: spacing.lg, minHeight: 52, paddingHorizontal: spacing.lg },
-  feedback: { color: palette.overdue, fontSize: 14, fontWeight: '600', lineHeight: 20, marginBottom: spacing.md },
+  root: { paddingTop: layout.headerOffset }, intro: { color: palette.muted, marginBottom: spacing.xxl, marginTop: spacing.md },
+  label: { ...typography.metaStrong, color: palette.ink, marginBottom: spacing.sm },
+  input: { backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.md, borderWidth: 1, ...typography.body, color: palette.ink, marginBottom: spacing.lg, minHeight: layout.fieldHeight, paddingHorizontal: spacing.lg },
+  feedback: { ...typography.body, color: palette.overdue, marginBottom: spacing.md },
   primary: { alignItems: 'center', backgroundColor: palette.primary, borderRadius: radius.md, justifyContent: 'center', minHeight: touchTarget + 4 },
-  primaryText: { color: palette.white, fontSize: 16, fontWeight: '700' }, disabled: { opacity: 0.48 },
-  secondary: { alignItems: 'center', justifyContent: 'center', marginTop: spacing.sm, minHeight: touchTarget }, secondaryText: { color: palette.primary, fontSize: 15, fontWeight: '700' },
+  primaryText: { ...typography.bodyStrong, color: palette.white }, disabled: { opacity: opacity.disabled },
+  secondary: { alignItems: 'center', justifyContent: 'center', marginTop: spacing.sm, minHeight: touchTarget }, secondaryText: { ...typography.bodyStrong, color: palette.primary },
 });

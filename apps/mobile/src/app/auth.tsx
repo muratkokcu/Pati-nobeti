@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Screen } from '@/components/screen';
 import { BodyText, DisplayText, MetaText } from '@/components/typography';
-import { palette, radius, spacing, touchTarget } from '@/design/tokens';
+import { layout, opacity, palette, radius, spacing, touchTarget, typography } from '@/design/tokens';
 import { useRuntime } from '@/state/runtime-context';
 import { getPendingInvite } from '@/data/pending-invite';
 
@@ -51,7 +51,7 @@ export default function AuthScreen() {
       <Text nativeID="password-label" style={styles.label}>Parola</Text>
       <TextInput accessibilityLabelledBy="password-label" autoCapitalize="none" autoComplete={intent === 'sign-in' ? 'current-password' : 'new-password'} editable={!pending && !configurationError} onChangeText={setPassword} placeholder="En az 8 karakter" placeholderTextColor={palette.muted} secureTextEntry style={styles.input} value={password} />
       {feedback ? <Text accessibilityLiveRegion="polite" style={styles.feedback}>{feedback}</Text> : null}
-      <Pressable accessibilityRole="button" accessibilityState={{ disabled: pending || Boolean(configurationError) }} disabled={pending || Boolean(configurationError)} onPress={() => void submit()} style={({ pressed }) => [styles.primary, pressed && styles.pressed, (pending || configurationError) && styles.disabled]}><Text style={styles.primaryText}>{pending ? 'İşleniyor…' : intent === 'sign-in' ? 'Giriş yap' : 'Hesap oluştur'}</Text></Pressable>
+      <Pressable accessibilityRole="button" accessibilityState={{ disabled: pending || Boolean(configurationError) }} disabled={pending || Boolean(configurationError)} onPress={() => void submit()} style={({ pressed }) => [styles.primary, pressed && styles.pressedPrimary, (pending || configurationError) && styles.disabled]}><Text style={styles.primaryText}>{pending ? 'İşleniyor…' : intent === 'sign-in' ? 'Giriş yap' : 'Hesap oluştur'}</Text></Pressable>
       {intent === 'sign-in' ? <Pressable accessibilityRole="button" accessibilityState={{ disabled: pending || Boolean(configurationError) }} disabled={pending || Boolean(configurationError)} onPress={() => void resetPassword()} style={styles.resetAction}><Text style={styles.resetText}>Parolamı unuttum</Text></Pressable> : null}
       <MetaText style={styles.disclosure}>Bu giriş yalnızca Supabase ortamı açıkça yapılandırıldığında görünür. Yerel demo kayıtları gerçek haneye aktarılmaz.</MetaText>
     </View>
@@ -59,15 +59,15 @@ export default function AuthScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { paddingTop: 72 }, intro: { color: palette.muted, marginTop: spacing.md, maxWidth: 520 },
-  error: { backgroundColor: palette.overdueSoft, borderRadius: radius.md, gap: spacing.sm, marginTop: spacing.xl, padding: spacing.lg }, errorText: { color: palette.overdue, fontSize: 15, fontWeight: '700', lineHeight: 21 },
+  root: { paddingTop: layout.headerOffset }, intro: { color: palette.muted, marginTop: spacing.md, maxWidth: layout.measure },
+  error: { backgroundColor: palette.overdueSoft, borderRadius: radius.md, gap: spacing.sm, marginTop: spacing.xl, padding: spacing.lg }, errorText: { ...typography.bodyStrong, color: palette.overdue },
   switcher: { borderBottomColor: palette.line, borderBottomWidth: 1, flexDirection: 'row', marginBottom: spacing.xl, marginTop: spacing.xxl },
   switch: { alignItems: 'center', flex: 1, justifyContent: 'center', minHeight: touchTarget }, switchActive: { borderBottomColor: palette.primary, borderBottomWidth: 3 },
-  switchText: { color: palette.muted, fontSize: 15, fontWeight: '700' }, switchTextActive: { color: palette.primary },
-  label: { color: palette.ink, fontSize: 14, fontWeight: '700', marginBottom: spacing.sm },
-  input: { backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.md, borderWidth: 1, color: palette.ink, fontSize: 16, marginBottom: spacing.lg, minHeight: 52, paddingHorizontal: spacing.lg },
-  feedback: { color: palette.overdue, fontSize: 14, fontWeight: '600', lineHeight: 20, marginBottom: spacing.md },
+  switchText: { ...typography.bodyStrong, color: palette.muted }, switchTextActive: { color: palette.primary },
+  label: { ...typography.metaStrong, color: palette.ink, marginBottom: spacing.sm },
+  input: { backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.md, borderWidth: 1, ...typography.body, color: palette.ink, marginBottom: spacing.lg, minHeight: layout.fieldHeight, paddingHorizontal: spacing.lg },
+  feedback: { ...typography.body, color: palette.overdue, marginBottom: spacing.md },
   primary: { alignItems: 'center', backgroundColor: palette.primary, borderRadius: radius.md, justifyContent: 'center', minHeight: touchTarget + 4, paddingHorizontal: spacing.lg },
-  primaryText: { color: palette.white, fontSize: 16, fontWeight: '700' }, pressed: { opacity: 0.78 }, disabled: { opacity: 0.48 }, disclosure: { marginTop: spacing.lg },
-  resetAction: { alignItems: 'center', justifyContent: 'center', marginTop: spacing.sm, minHeight: touchTarget }, resetText: { color: palette.primary, fontSize: 15, fontWeight: '700' },
+  primaryText: { ...typography.bodyStrong, color: palette.white }, pressedPrimary: { backgroundColor: palette.primaryPressed }, disabled: { opacity: opacity.disabled }, disclosure: { marginTop: spacing.lg },
+  resetAction: { alignItems: 'center', justifyContent: 'center', marginTop: spacing.sm, minHeight: touchTarget }, resetText: { ...typography.bodyStrong, color: palette.primary },
 });

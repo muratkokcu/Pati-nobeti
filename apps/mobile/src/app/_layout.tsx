@@ -22,6 +22,7 @@ export default function RootLayout() {
           <Stack.Screen name="record/[occurrenceId]" options={{ presentation: 'modal', title: 'Durum kaydı' }} />
           <Stack.Screen name="invite/[token]" options={{ title: 'Daveti değerlendir' }} />
           <Stack.Screen name="paywall" options={{ presentation: 'modal', title: 'PatiNöbeti Plus' }} />
+          <Stack.Screen name="design-system" options={{ title: 'Tasarım sistemi' }} />
         </Stack>
       </AppProvider></RuntimeProvider>
     </DatabaseGate>

@@ -50,9 +50,14 @@ export function clockSuffix(date: Date) {
   return spoken % 10 === 0 ? LOCATIVE[spoken] ?? 'da' : LOCATIVE[spoken % 10];
 }
 
+// Saat gösterimi tek yerden: hem cümlede hem zaman çizelgesinde aynı biçim.
+export function formatClock(value: string | Date) {
+  return new Intl.DateTimeFormat('tr-TR', { hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+}
+
 export function eventSentence(event: CareEvent) {
   const recordedAt = new Date(event.recordedAt);
-  const time = new Intl.DateTimeFormat('tr-TR', { hour: '2-digit', minute: '2-digit' }).format(recordedAt);
+  const time = formatClock(recordedAt);
   const verb = event.kind === 'resolution' ? 'olarak netleştirdi.' : 'ekledi.';
   return `${event.actorName}, ${time}’${clockSuffix(recordedAt)} ${outcomeLabel(event.outcome)} ${verb}`;
 }
