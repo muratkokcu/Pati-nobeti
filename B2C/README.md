@@ -26,6 +26,7 @@ planı bulunan evcil hayvanlar için ortak bakım devir uygulaması.
 - [MVP ortak inceleme](docs/09-mvp-ortak-inceleme.md)
 - [Production omurgası](docs/10-production-omurga.md)
 - [Simüle kullanıcı testi bulguları](docs/08-kullanici-testi-bulgulari.md)
+- [Görsel tasarım kıyaslaması](docs/tasarim-kiyaslama/README.md)
 - [Karar kaydı](docs/adr/0001-patinobeti-secimi.md)
 - [Stack ve marka kararı](docs/adr/0002-mvp-stack-ve-marka.md)
 
