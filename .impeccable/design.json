@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-19T00:00:00.000Z",
+  "title": "Design System: PatiNöbeti",
+  "extensions": {
+    "colorMeta": {
+      "canvas": { "role": "neutral", "displayName": "Kâğıt Tuval", "canonical": "#F1EDE2", "tonalRamp": ["#26241E", "#3D3A30", "#565143", "#6F6957", "#8A836D", "#A79F87", "#C5BCA3", "#F1EDE2"] },
+      "surface": { "role": "neutral", "displayName": "Yüzey", "canonical": "#FBF8EF", "tonalRamp": ["#282520", "#403C33", "#585347", "#716B5C", "#8C8572", "#A9A18B", "#C8BFA7", "#FBF8EF"] },
+      "raised": { "role": "neutral", "displayName": "Kabarık Yüzey", "canonical": "#FFFDF8", "tonalRamp": ["#2A2823", "#423F37", "#5B574C", "#757063", "#908A7A", "#ADA593", "#CCC3AE", "#FFFDF8"] },
+      "sunken": { "role": "neutral", "displayName": "Çökük Yüzey", "canonical": "#E9E4D7", "tonalRamp": ["#24221C", "#3A372E", "#524D41", "#6A6455", "#847D6B", "#A09782", "#BDB39A", "#E9E4D7"] },
+      "ink": { "role": "neutral", "displayName": "Mürekkep", "canonical": "#1F2723", "tonalRamp": ["#0C100E", "#1F2723", "#33403A", "#485A52", "#5F756B", "#7B8F86", "#A6B5AD", "#D8E0DB"] },
+      "muted": { "role": "neutral", "displayName": "Sessiz Metin", "canonical": "#505C56", "tonalRamp": ["#111513", "#222A26", "#34403A", "#47564F", "#5B6D65", "#8B9A93", "#A9B6B0", "#D9E0DD"] },
+      "line": { "role": "neutral", "displayName": "Ayırıcı Çizgi", "canonical": "#888271", "tonalRamp": ["#1B1A16", "#2F2D26", "#454237", "#5C584A", "#746F5D", "#888271", "#ADA795", "#D9D5C6"] },
+      "line-strong": { "role": "neutral", "displayName": "Güçlü Çizgi", "canonical": "#746D5A", "tonalRamp": ["#171512", "#2A271F", "#3E3A2E", "#534E3E", "#69634E", "#746D5A", "#9F9880", "#D0CAB5"] },
+      "primary": { "role": "primary", "displayName": "Nöbet Yeşili", "canonical": "#205241", "tonalRamp": ["#09170F", "#0F2A1E", "#17402F", "#205241", "#2C6C55", "#3E8D70", "#6FBF96", "#CFE1D6"] },
+      "primary-pressed": { "role": "primary", "displayName": "Basılı Yeşil", "canonical": "#194133", "tonalRamp": ["#08140E", "#0D2419", "#143627", "#194133", "#245846", "#33765D", "#5FAD86", "#C6DCCF"] },
+      "primary-soft": { "role": "primary", "displayName": "Yumuşak Yeşil", "canonical": "#CFE1D6", "tonalRamp": ["#0D1911", "#16291C", "#213E2B", "#2F573C", "#417553", "#5D9A73", "#94C1A6", "#CFE1D6"] },
+      "hero-primary": { "role": "primary", "displayName": "Hero Yeşili", "canonical": "#1B4A39", "tonalRamp": ["#08150F", "#0D261B", "#133A2A", "#1B4A39", "#25634B", "#358365", "#66B48C", "#C9DED3"] },
+      "hero-brass": { "role": "secondary", "displayName": "Pirinç", "canonical": "#E9B44C", "tonalRamp": ["#221803", "#3A2907", "#533B0C", "#6E4F12", "#8B661A", "#AC8325", "#CB9D35", "#E9B44C"] },
+      "photo-panel": { "role": "neutral", "displayName": "Fotoğraf Paneli", "canonical": "#252A20", "tonalRamp": ["#0C0E0A", "#171A13", "#252A20", "#38402F", "#4C5741", "#637055", "#8A957C", "#C3CAB8"] },
+      "scrim": { "role": "neutral", "displayName": "Fotoğraf Perdesi", "canonical": "rgba(18, 21, 17, 0.58)", "tonalRamp": ["#0A0C09", "#121511", "#1D2119", "#2B3126", "#3B4335", "#4E5846", "#6B765F", "#9AA491"] },
+      "status-done-accent": { "role": "tertiary", "displayName": "Yapıldı Yeşili", "canonical": "#2E6B54", "tonalRamp": ["#0B1A14", "#122A20", "#1B402F", "#25563F", "#2E6B54", "#3F8C6E", "#6EB795", "#CBE3D6"] },
+      "status-overdue-accent": { "role": "tertiary", "displayName": "Geçti Amberi", "canonical": "#B5741E", "tonalRamp": ["#1D1205", "#33200A", "#4A2E0E", "#634013", "#7E5218", "#9B651B", "#B5741E", "#F2DFB6"] },
+      "status-uncertain-accent": { "role": "tertiary", "displayName": "Emin Değilim Menekşesi", "canonical": "#5B6394", "tonalRamp": ["#0F1120", "#1B1E36", "#282C4E", "#373C68", "#474E80", "#5B6394", "#8C93BC", "#DCDFEE"] },
+      "status-conflict-accent": { "role": "tertiary", "displayName": "Çakışma Tuğlası", "canonical": "#A43C2E", "tonalRamp": ["#1D0A07", "#33120D", "#4A1B14", "#63251B", "#7F2F23", "#A43C2E", "#CF6A5A", "#F2D9D1"] },
+      "status-upcoming-accent": { "role": "tertiary", "displayName": "Yaklaşıyor Grisi", "canonical": "#6D7973", "tonalRamp": ["#151816", "#252A27", "#363D39", "#48514C", "#5B6560", "#6D7973", "#99A39D", "#D1D7D4"] },
+      "person-kehribar": { "role": "tertiary", "displayName": "Kehribar", "canonical": "#85491B", "tonalRamp": ["#160C04", "#281607", "#3B210B", "#502D0F", "#673914", "#85491B", "#B97B45", "#E8C59F"] },
+      "person-gok": { "role": "tertiary", "displayName": "Gök", "canonical": "#1B5A93", "tonalRamp": ["#04101B", "#071E31", "#0B2D49", "#0F3D62", "#144D7C", "#1B5A93", "#4C8CC4", "#AECDE8"] },
+      "person-sis": { "role": "tertiary", "displayName": "Sis", "canonical": "#625462", "tonalRamp": ["#120F12", "#211C21", "#312A31", "#423942", "#544954", "#625462", "#948794", "#D2CAD2"] },
+      "person-yosun": { "role": "tertiary", "displayName": "Yosun", "canonical": "#475E49", "tonalRamp": ["#0C110C", "#161F17", "#222E23", "#2F3E30", "#3C4E3D", "#475E49", "#78917A", "#C1D2C2"] },
+      "person-erguvan": { "role": "tertiary", "displayName": "Erguvan", "canonical": "#764878", "tonalRamp": ["#150C15", "#251826", "#372438", "#49314A", "#5D3F5E", "#764878", "#A87CAA", "#DFC6E0"] },
+      "person-cam": { "role": "tertiary", "displayName": "Çam", "canonical": "#2F6338", "tonalRamp": ["#08140A", "#0E2311", "#163419", "#1E4522", "#27572B", "#2F6338", "#5C9464", "#B9D6BE"] },
+      "person-kul": { "role": "tertiary", "displayName": "Kül", "canonical": "#695357", "tonalRamp": ["#130F10", "#231B1D", "#34292B", "#46383A", "#58474A", "#695357", "#9C8589", "#D6C8CA"] },
+      "person-kiremit": { "role": "tertiary", "displayName": "Kiremit", "canonical": "#953C38", "tonalRamp": ["#190A09", "#2C120F", "#411A17", "#57231F", "#6E2C28", "#953C38", "#C56E6A", "#E9C3C1"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Ekran başlığı ve hero'daki hayvan adı; sistemin en büyük tipi (26/32, 600)." },
+      "title": { "displayName": "Title", "purpose": "ŞİMDİ kartı başlığı, gün grubu başlığı, boş durum başlığı." },
+      "body": { "displayName": "Body", "purpose": "Kayıt cümlesi ve açıklama metni." },
+      "bodyStrong": { "displayName": "Body Strong", "purpose": "Kişi adı, satır başlığı ve buton etiketi." },
+      "meta": { "displayName": "Meta", "purpose": "Tarih, eşitleme notu, sayaç, ikincil açıklama." },
+      "metaStrong": { "displayName": "Meta Strong", "purpose": "Durum çipi etiketi (md) ve vurgulu meta." },
+      "label": { "displayName": "Label", "purpose": "Küçük durum çipi, sekme etiketi, davet durumu." },
+      "clock": { "displayName": "Clock", "purpose": "Tabular saat; satır ve imza satırı saatleri." },
+      "clockLead": { "displayName": "Clock Lead", "purpose": "ŞİMDİ kartının büyük tabular saati." }
+    },
+    "shadows": [
+      { "name": "floating", "value": "0 6px 18px rgba(31, 39, 35, 0.16)", "purpose": "Sistemin tek gölgesi; yalnız yüzen pill navigasyon. Android karşılığı elevation 8. Koyu şemada gölge görünmez, ayrımı nav-border taşır (K-64)." }
+    ],
+    "motion": [],
+    "breakpoints": [
+      { "name": "measure", "value": "560px" },
+      { "name": "content-max", "value": "680px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Tek birincil eylem; ŞİMDİ kartının en altında, hitapsız etiketle.",
+      "html": "<button class=\"ds-btn-primary\">Durum kaydet<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 16px; background: #205241; color: #FFFFFF; border: none; border-radius: 12px; font: 600 16px/1.438 system-ui, sans-serif; cursor: pointer; } .ds-btn-primary:hover { background: #194133; } .ds-btn-primary:active { background: #194133; } .ds-btn-primary:focus-visible { outline: 2px solid #1F2723; outline-offset: 2px; } .ds-btn-primary[disabled] { opacity: 0.65; cursor: default; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "İkincil eylem: zeminsiz, 1 px yeşil kenar, aynı dokunma yüksekliği.",
+      "html": "<button class=\"ds-btn-secondary\">Yeni kod üret</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px; background: transparent; color: #205241; border: 1px solid #205241; border-radius: 12px; font: 600 16px/1.438 system-ui, sans-serif; cursor: pointer; } .ds-btn-secondary:hover { background: #CFE1D6; } .ds-btn-secondary:active { background: #E8E3D6; } .ds-btn-secondary:focus-visible { outline: 2px solid #1F2723; outline-offset: 2px; }"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "refersTo": "chip-status-done",
+      "description": "Durum üçlüsü: ikon + Türkçe etiket + renk. İkon ve etiket kaldırılamaz.",
+      "html": "<span class=\"ds-chip-status\"><svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"currentColor\"><path d=\"M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.3-4-4 1.6-1.6 2.4 2.4 5.2-5.2 1.6 1.6-6.8 6.8z\"/></svg>Yapıldı</span>",
+      "css": ".ds-chip-status { display: inline-flex; align-items: center; gap: 4px; padding: 5px 8px; background: #CFE1D6; color: #174E3B; border: 1px solid #6A8979; border-radius: 8px; font: 600 13px/1.462 system-ui, sans-serif; }"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip-filter",
+      "description": "Geçmiş ekranının pill filtresi; seçim ayrıca accessibilityState ile duyurulur.",
+      "html": "<div class=\"ds-chip-filter-row\"><button class=\"ds-chip-filter ds-chip-filter--active\">Tümü</button><button class=\"ds-chip-filter\">Yapıldı</button><button class=\"ds-chip-filter\">Atlandı</button><button class=\"ds-chip-filter\">Emin değilim</button></div>",
+      "css": ".ds-chip-filter-row { display: flex; flex-wrap: wrap; gap: 8px; } .ds-chip-filter { min-height: 36px; padding: 0 12px; background: #FBF8EF; color: #1F2723; border: 1px solid #888271; border-radius: 999px; font: 600 13px/1.462 system-ui, sans-serif; cursor: pointer; } .ds-chip-filter:hover { background: #E8E3D6; } .ds-chip-filter:focus-visible { outline: 2px solid #1F2723; outline-offset: 2px; } .ds-chip-filter--active { background: #205241; color: #FFFFFF; border-color: #205241; } .ds-chip-filter--active:hover { background: #194133; }"
+    },
+    {
+      "name": "Now Card",
+      "kind": "card",
+      "refersTo": "card-now",
+      "description": "Günün tek odağı: kabarık yüzey, güçlü çizgi, büyük tabular saat, tek birincil eylem.",
+      "html": "<article class=\"ds-card-now\"><header class=\"ds-card-now__head\"><span class=\"ds-card-now__clock\">20:00</span><span class=\"ds-chip-status ds-chip-status--due\"><svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"currentColor\"><circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/></svg>Şimdi</span></header><h3 class=\"ds-card-now__title\">Akşam bakımı</h3><p class=\"ds-card-now__meta\">Bugün için kayıt yok</p><button class=\"ds-btn-primary ds-card-now__action\">Durum kaydet</button></article>",
+      "css": ".ds-card-now { display: flex; flex-direction: column; gap: 8px; padding: 18px; background: #FFFDF8; border: 1px solid #746D5A; border-radius: 16px; } .ds-card-now__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; } .ds-card-now__clock { font: 600 20px/1.2 system-ui, sans-serif; letter-spacing: -0.2px; font-variant-numeric: tabular-nums; color: #1F2723; } .ds-card-now__title { margin: 0; font: 600 19px/1.316 system-ui, sans-serif; color: #1F2723; } .ds-card-now__meta { margin: 0; font: 400 13px/1.462 system-ui, sans-serif; color: #505C56; } .ds-chip-status--due { background: #CFE1D6; color: #174E3B; border-color: #6A8979; } .ds-card-now__action { margin-top: 8px; width: 100%; }"
+    },
+    {
+      "name": "Next Row",
+      "kind": "card",
+      "refersTo": "row-next",
+      "description": "Sıradaki bakım: sıkışık satır, ŞİMDİ kartıyla aynı ağırlıkta gösterilmez.",
+      "html": "<button class=\"ds-row-next\"><span class=\"ds-row-next__clock\">08:00</span><span class=\"ds-row-next__copy\"><strong>Sabah bakımı</strong><span class=\"ds-row-next__line\"><i class=\"ds-dot\"></i>Deniz “yapıldı” kaydetti</span></span><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"#505C56\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 6l6 6-6 6\"/></svg></button>",
+      "css": ".ds-row-next { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 8px 10px; background: #FBF8EF; border: 1px solid #888271; border-radius: 12px; text-align: left; cursor: pointer; } .ds-row-next:hover { background: #E8E3D6; } .ds-row-next:focus-visible { outline: 2px solid #1F2723; outline-offset: 2px; } .ds-row-next__clock { min-width: 42px; font: 600 14px/1.429 system-ui, sans-serif; letter-spacing: 0.2px; font-variant-numeric: tabular-nums; color: #1F2723; } .ds-row-next__copy { display: flex; flex-direction: column; gap: 2px; flex: 1; } .ds-row-next__copy strong { font: 600 16px/1.438 system-ui, sans-serif; color: #1F2723; } .ds-row-next__line { display: flex; align-items: center; gap: 8px; font: 400 16px/1.438 system-ui, sans-serif; color: #1F2723; } .ds-dot { width: 10px; height: 10px; border-radius: 50%; background: #1B5A93; flex: none; }"
+    },
+    {
+      "name": "Person Badge",
+      "kind": "custom",
+      "refersTo": "hero-panel",
+      "description": "Kimlik taşıyıcısı: renk + baş harf + isim. Renk kaldırıldığında da okunur.",
+      "html": "<div class=\"ds-person\"><span class=\"ds-person__avatar\">DE</span><span class=\"ds-person__copy\"><strong>Deniz</strong><em>bakım veren</em></span></div>",
+      "css": ".ds-person { display: inline-flex; align-items: center; gap: 8px; } .ds-person__avatar { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: #1B5A93; color: #FFFFFF; font: 600 13px/1 system-ui, sans-serif; letter-spacing: 0.2px; } .ds-person__copy { display: flex; flex-direction: column; gap: 2px; } .ds-person__copy strong { font: 600 16px/1.438 system-ui, sans-serif; color: #1F2723; } .ds-person__copy em { font: 400 13px/1.462 system-ui, sans-serif; font-style: normal; color: #505C56; }"
+    },
+    {
+      "name": "Event Line",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "Kalıcı imza satırı: SAAT → KİŞİ → FİİL. Ayırıcı nokta kişinin rengidir.",
+      "html": "<p class=\"ds-event\"><span class=\"ds-event__time\">08:12</span><i class=\"ds-dot\"></i><span class=\"ds-event__sentence\"><strong>Deniz</strong> <b class=\"ds-event__outcome\">“yapıldı”</b> kaydetti</span></p>",
+      "css": ".ds-event { display: flex; align-items: flex-start; gap: 8px; min-height: 22px; margin: 0; } .ds-event__time { padding-top: 2px; font: 600 14px/1.429 system-ui, sans-serif; letter-spacing: 0.2px; font-variant-numeric: tabular-nums; color: #1F2723; } .ds-event .ds-dot { margin-top: 6px; } .ds-event__sentence { font: 400 16px/1.438 system-ui, sans-serif; color: #1F2723; } .ds-event__sentence strong { font-weight: 600; } .ds-event__outcome { font-weight: 600; font-style: normal; color: #174E3B; }"
+    },
+    {
+      "name": "Photo Hero",
+      "kind": "custom",
+      "refersTo": "hero-panel",
+      "description": "Tam genişlik fotoğraf hero'su; metin fotoğrafın üstünde yüzmez, koyu panele girer.",
+      "html": "<section class=\"ds-hero\"><div class=\"ds-hero__panel\"><div class=\"ds-hero__head\"><h2>Luna</h2><span class=\"ds-hero__track\"><i class=\"is-filled\"></i><i></i></span></div><p class=\"ds-hero__summary\">Bugün 1 / 2 kaydedildi</p></div></section>",
+      "css": ".ds-hero { position: relative; display: flex; align-items: flex-end; height: 320px; padding: 0 12px 44px; background: #1B4A39 center 30%/cover no-repeat; border-radius: 0; overflow: hidden; } .ds-hero__panel { display: flex; flex-direction: column; gap: 4px; width: 100%; padding: 14px; background: #252A20; border-radius: 24px; } .ds-hero__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; } .ds-hero__head h2 { margin: 0; font: 600 26px/1.231 system-ui, sans-serif; letter-spacing: -0.4px; color: #F3F1E9; } .ds-hero__track { display: flex; gap: 4px; width: 72px; } .ds-hero__track i { flex: 1; min-height: 6px; border: 1px solid #CFD6CC; border-radius: 999px; } .ds-hero__track i.is-filled { background: #F3F1E9; } .ds-hero__summary { margin: 0; font: 600 16px/1.438 system-ui, sans-serif; color: #CFD6CC; }"
+    },
+    {
+      "name": "Floating Nav Pill",
+      "kind": "nav",
+      "refersTo": "nav-pill",
+      "description": "Sistemin gölge taşıyan tek öğesi; dört bölüm, etiketler her zaman görünür.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav__item is-active\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"currentColor\"><path d=\"M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm12 7v10H5V9h14z\"/></svg>Bugün</a><a class=\"ds-nav__item\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M3 10h18M8 3v4M16 3v4\"/></svg>Planlar</a><a class=\"ds-nav__item\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>Geçmiş</a><a class=\"ds-nav__item\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"9\" cy=\"8\" r=\"3.2\"/><path d=\"M3 19c0-3 2.7-5 6-5s6 2 6 5M16.5 11.5a3 3 0 1 0-1.6-5.5M21 19c0-2.4-1.7-4.1-4.2-4.6\"/></svg>Hane</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-around; height: 78px; padding: 8px 0; background: #FFFDF8; border: 1px solid #888271; border-radius: 999px; box-shadow: 0 6px 18px rgba(31, 39, 35, 0.16); } .ds-nav__item { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 0 12px; color: #505C56; font: 600 12px/1.417 system-ui, sans-serif; letter-spacing: 0.1px; cursor: pointer; } .ds-nav__item:hover { color: #1F2723; } .ds-nav__item:focus-visible { outline: 2px solid #1F2723; outline-offset: 4px; border-radius: 999px; } .ds-nav__item.is-active { color: #205241; }"
+    },
+    {
+      "name": "Week Track",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "Son yedi gün; seri sayacı değil günlerin kendisi, sayı ayrıca yazıyla söylenir.",
+      "html": "<section class=\"ds-week\"><header class=\"ds-week__head\"><span>Son 7 gün</span><span class=\"ds-week__count\">9 / 14 bakım kaydedildi</span></header><div class=\"ds-week__row\"><span class=\"ds-week__cell\"><i class=\"is-full\"></i>P</span><span class=\"ds-week__cell\"><i class=\"is-full\"></i>P</span><span class=\"ds-week__cell\"><i class=\"is-partial\"></i>S</span><span class=\"ds-week__cell\"><i class=\"is-missed\"></i>Ç</span><span class=\"ds-week__cell\"><i class=\"is-full\"></i>P</span><span class=\"ds-week__cell\"><i class=\"is-partial\"></i>C</span><span class=\"ds-week__cell\"><i class=\"is-today\"></i>C</span></div></section>",
+      "css": ".ds-week { display: flex; flex-direction: column; gap: 8px; padding: 14px; background: #FBF8EF; border: 1px solid #888271; border-radius: 16px; } .ds-week__head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; font: 400 13px/1.462 system-ui, sans-serif; color: #1F2723; } .ds-week__count { color: #505C56; } .ds-week__row { display: flex; justify-content: space-between; } .ds-week__cell { display: flex; flex-direction: column; align-items: center; gap: 4px; font: 400 13px/14px system-ui, sans-serif; color: #505C56; } .ds-week__cell i { width: 14px; height: 14px; border-radius: 999px; border: 1.5px solid #888271; } .ds-week__cell i.is-full { background: #2E6B54; border-color: #2E6B54; } .ds-week__cell i.is-partial { background: #B5741E; border-color: #B5741E; } .ds-week__cell i.is-missed { background: transparent; border-color: #987F46; } .ds-week__cell i.is-today { background: transparent; border: 2px solid #1F2723; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Kayıt Defteri ve Hayvanın Kendisi",
+    "overview": "PatiNöbeti'nin görsel dünyası iki malzemeden kurulur: hayvanın gerçek fotoğrafı ve sıcak kâğıt üzerine düşmüş bir kayıt defteri. Ekran hayvanla açılır — fotoğraf kenardan kenara, ekranın üst üçte birinde (320 dp) — ve hemen ardından kâğıt yüzey fotoğrafın üstüne 28 px yuvarlatılmış köşeyle biner. Bu bindirme sistemin imzasıdır: fotoğraf duyguyu, kâğıt yüzey işi taşır, ikisi arasında kesik değil geçiş vardır.\n\nDefter tarafı bilerek düşük kontrastlı ve yoğundur. Ağırlık kontrastı dardır (400 ↔ 600; sistemde 700 yoktur), hiyerarşi ölçek ve boşlukla kurulur, saatler tabular rakamla alt alta hizalanır. Kart dolgusu 14 px'e kadar sıkıştırılmıştır çünkü ekranda kaç bakımın kaydedildiği tek bakışta görünmelidir. Renk bir vurgu aracı değil, iki ayrı taşıyıcıdır: kimlik (sekiz kişi rengi) ve durum (yedi durumun fg/bg/border/accent üçlüsü) — ve her ikisi de renksiz okunacak şekilde ayrıca yazıyla adlandırılır.\n\nBu dünyaya ait olmayanlar, uygulanmış üründe de reddedilmiş hâlde: oyuncakçı estetiği, klinik soğukluk, jenerik pembe/mavi pet dili, eşit ağırlıklı kart listesi, iki özdeş birincil buton, fotoğrafın üstünde yüzen metin, kartlara serpiştirilmiş gölge.",
+    "keyCharacteristics": [
+      "Fotoğraf taşıyıcıdır, dekor değil; metin fotoğrafın üstüne değil koyu panele girer.",
+      "Dar ağırlık kontrastı (400/600), tabular saat, negatif harf aralığı yalnız ≥20 dp'de.",
+      "Renk hiçbir zaman tek taşıyıcı değil: durum = ikon + Türkçe etiket + renk.",
+      "Tek gölge, yalnız yüzen pill navigasyonda; her yerde ton + 1 px çizgi.",
+      "Erişilebilirlik eşikleri renk kararlarından önce gelir, sonra değil.",
+      "Tek ikon ailesi: Ionicons."
+    ],
+    "rules": [
+      { "name": "The Eşik Önce Rule", "body": "Her renk B2C/docs/tasarim-kiyaslama/06-erisilebilirlik-kabul-listesi.md eşikleriyle ölçülerek seçildi: karar metni ≥7,0 (K-01), ikincil metin ≥5,5 (K-02), taşıyıcı çizgi ve nokta ≥3,0 (K-03), kişi dolgusu ≥3,0 (K-04), baş harf ≥7,0 (K-05). Yeni bir renk apps/mobile/scripts/kontrast.py ile ölçülmeden sisteme girmez. Eşik renge uydurulmaz; renk eşiğe uydurulur.", "section": "colors" },
+      { "name": "The Renk Tek Başına Konuşmaz Rule", "body": "Gri tonda durum renkleri birbirinden ayrılmıyor (yapıldı ↔ çakışma ΔE 0,4). Bu yüzden her durum ikon + Türkçe etiket + renk üçlüsüyle gösterilir; ikon ve etiket kaldırılamaz. Aynı biçimde kimlik rengi her zaman baş harf ve isimle birlikte gelir.", "section": "colors" },
+      { "name": "The Kırmızı Yalnız Çakışma Rule", "body": "Tuğla (status-conflict-*) yalnız “aynı bakım için iki farklı kayıt var” ve hata için ayrılmıştır. Gecikmiş bakım amberdir; geciken bir bakım bir hata değildir.", "section": "colors" },
+      { "name": "The 600 Tavanı Rule", "body": "Sistemde 700 yoktur (K-13). Hiyerarşi ölçek ve boşlukla kurulur; bir şeyi öne çıkarmak için ağırlık artırılmaz, boyut veya yüzey kademesi değiştirilir.", "section": "typography" },
+      { "name": "The Tabular Saat Rule", "body": "Saat, tarih ve sayı sütunları fontVariant: ['tabular-nums'] taşır (K-21), çünkü alt alta karşılaştırılıyorlar. Saati gövde tipiyle yazma.", "section": "typography" },
+      { "name": "The Ölçekle Büyü Rule", "body": "allowFontScaling={false} yasaktır (K-19). Sabit çaplı daireler (avatar, ray düğümü) scaled() ile yazı ölçeğine bağlıdır; baş harf kırpılmaz, kart uzar. 20 dp altında negatif harf aralığı kullanılmaz (K-15).", "section": "typography" },
+      { "name": "The Tek Gölge Rule", "body": "Gölge yalnız yüzen navigasyondadır. Kartta, çipte, panelde, modalda gölge yoktur; ikinci bir gölge tokenı eklemek sistemi bozar.", "section": "elevation" },
+      { "name": "The Basılı Hâl Dolgudur Rule", "body": "Basılı durum opaklıkla değil dolguyu koyultarak gösterilir (K-35): primary-pressed, surface-pressed, sunken. Opaklık yalnız devre dışı öğeye aittir (0,65) ve devre dışı öğe bile ≥3,0 kontrast ve nedenini söyleyen görünür bir metin taşır (K-10).", "section": "elevation" }
+    ],
+    "dos": [
+      "Do her durumu ikon + Türkçe etiket + renk üçlüsüyle göster; renk kaldırıldığında ekran hâlâ okunmalı.",
+      "Do yeni renkleri apps/mobile/scripts/kontrast.py ile K-01…K-05 eşiklerine karşı ölç ve sonucu kabul listesine yaz.",
+      "Do kişi rengini assignPersonColors sonucundan geçir; sıra hane listesinin sırasıdır, ilk iki bakım veren en çok ayrışan çifti alır.",
+      "Do derinliği yüzey kademesi (canvas → surface → raised) ve 1 px çizgiyle kur.",
+      "Do hayvan fotoğrafını hero'nun taşıyıcısı yap; metni koyu panele koy, fotoğrafın üstünde yüzdürme.",
+      "Do gövde metninde saygılı “siz” kullan; düğme etiketlerini hitapsız bırak.",
+      "Do her rasterın kaynağını ve lisansını assets/images/pets/KAYNAK.md biçiminde kaydet; kaynağı yazılmamış görsel uygulamaya girmez.",
+      "Do basılı hâli dolguyu koyultarak ver (primary-pressed, surface-pressed)."
+    ],
+    "donts": [
+      "Don't karta, çipe veya panele gölge ekleme; shadow.floating yalnız yüzen navigasyona aittir.",
+      "Don't 700 ağırlık veya sistemde olmayan bir tip boyutu kullanma; hiyerarşiyi ölçek ve boşlukla kur.",
+      "Don't gecikmeyi kırmızıyla anlatma; kırmızı yalnız “iki farklı kayıt var” ve hata içindir.",
+      "Don't kişi rengini durum anlatmak, durum rengini kimlik anlatmak için kullanma.",
+      "Don't basılı durumu opaklıkla gösterme; opaklık yalnız devre dışı (0,65) içindir.",
+      "Don't metni fotoğrafın üstüne doğrudan koyma; photo-panel dışında fotoğraf üstü metin yoktur, scrim dekoratiftir.",
+      "Don't Ionicons dışında ikon ailesi karıştırma.",
+      "Don't ekranda tek seferlik renk, boşluk, radius veya tip boyutu yaz; önce apps/mobile/src/design/tokens.ts güncellenir, DESIGN.md aynı değişiklikte yenilenir.",
+      "Don't allowFontScaling={false} yazma; metin büyüdüğünde kart uzar.",
+      "Don't demo verisini canlı hane durumu, tıbbi kanıt, gönderilmiş davet veya alınmış ödeme gibi sunma."
+    ],
+    "knownGaps": [
+      "Koyu şema tokenları hazır ama AppThemeProvider useColorScheme()e bağlı değil ve altı ekran hâlâ düz palette (= açık şema) kullanıyor; koyu tema desteklenmiş sayılmaz.",
+      "Dynamic Type gerçek iOS/Android cihazda test edilmedi; scaled() kuralları kodda var, doğrulama yok.",
+      "Hareket sistemi yok: süre, easing veya geçiş tokenı bulunmuyor. Tek hareket hero fotoğrafının 220 ms açılış geçişidir ve tokenlaştırılmamıştır."
+    ]
+  }
+}
