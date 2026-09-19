@@ -2,7 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Redirect, Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenLoading } from '@/components/screen';
-import { layout, palette, radius, shadow, spacing, typography } from '@/design/tokens';
+import { layout, palette, radius, scaled, shadow, spacing, typography } from '@/design/tokens';
 import { useRuntime } from '@/state/runtime-context';
 
 const icons = {
@@ -30,7 +30,7 @@ export default function TabsLayout() {
       borderTopColor: palette.navBorder,
       borderWidth: layout.hairline,
       bottom: insets.bottom + spacing.sm,
-      height: layout.navHeight,
+      height: scaled(layout.navHeight, 1.35),
       left: layout.navInset,
       paddingBottom: spacing.sm,
       paddingTop: spacing.sm,
@@ -38,9 +38,9 @@ export default function TabsLayout() {
       right: layout.navInset,
       ...shadow.floating,
     },
-    tabBarItemStyle: { borderRadius: radius.pill, height: layout.navHeight - spacing.lg, paddingVertical: 0 },
+    tabBarItemStyle: { borderRadius: radius.pill, height: scaled(layout.navHeight, 1.35) - spacing.lg, paddingVertical: 0 },
     tabBarIconStyle: { marginBottom: 0, marginTop: spacing.xxs },
-    tabBarLabelStyle: { ...typography.label, lineHeight: 14, marginTop: spacing.xxs },
+    tabBarLabelStyle: { ...typography.label, marginTop: spacing.xxs },
     tabBarIcon: ({ color, focused, size }) => <Ionicons color={color} name={focused ? icons[route.name as keyof typeof icons].active : icons[route.name as keyof typeof icons].idle} size={layout.icon.lg} />,
   })}>
     <Tabs.Screen name="index" options={{ title: 'Bugün' }} />

@@ -18,7 +18,7 @@ type IoniconName = ComponentProps<typeof Ionicons>['name'];
  * tamamen farklı geometridedir.
  */
 export const STATUS_LANGUAGE: Record<StatusKey, { icon: IoniconName; label: string; sentence: string }> = {
-  upcoming: { icon: 'ellipse-outline', label: 'Yaklaşıyor', sentence: 'Planlanan saat henüz gelmedi' },
+  upcoming: { icon: 'time-outline', label: 'Yaklaşıyor', sentence: 'Planlanan saat henüz gelmedi' },
   due: { icon: 'radio-button-on', label: 'Şimdi', sentence: 'Planlanan saat geldi' },
   overdue: { icon: 'alarm', label: 'Geçti', sentence: 'Planlanan saat geçti, kayıt yok' },
   done: { icon: 'checkmark-circle', label: 'Yapıldı', sentence: 'Yapıldı olarak kaydedildi' },
@@ -39,7 +39,7 @@ export function outcomeWord(outcome: CareOutcome): string {
 }
 
 export function eventVerb(event: CareEvent): string {
-  return event.kind === 'resolution' ? 'olarak netleştirdi' : 'ekledi';
+  return event.kind === 'resolution' ? 'olarak netleştirdi' : 'kaydetti';
 }
 
 /** Ekranda gösterilecek durum. Yedi durumun hepsi bu tek eşlemeden gelir. */

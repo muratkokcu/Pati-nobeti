@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { PersonBadgeStack } from './person-badge';
 import { BodyText, DisplayText, MetaText } from './typography';
 import { useAppTheme } from '@/design/theme';
-import { layout, radius, scaled, spacing, typography } from '@/design/tokens';
+import { layout, radius, spacing, typography } from '@/design/tokens';
 import { DEMO_PET_PHOTO } from '@/domain/types';
 import type { HouseholdMember, Pet, TaskOccurrence } from '@/domain/types';
 import { standingEvents } from '@/domain/care';
@@ -38,14 +38,11 @@ export function PetHero({ pet, occurrences, members, colorIndexFor }: Props) {
     : recorded === total
       ? `Bugünün ${total} bakımı da kaydedildi`
       : `Bugün ${recorded} / ${total} kaydedildi`;
-  const photoWidth = scaled(layout.heroPhoto, 1.5);
+  const photoWidth = layout.heroPhoto;
 
   return (
     <View style={[styles.root, { backgroundColor: theme.heroPrimary }]}>
-      <View aria-hidden pointerEvents="none" style={styles.paws}>
-        <Ionicons color={theme.onHeroPrimary} name="paw" size={layout.icon.xl * 3} style={styles.pawLarge} />
-        <Ionicons color={theme.onHeroPrimary} name="paw" size={layout.icon.xl * 1.6} style={styles.pawSmall} />
-      </View>
+      <RailTexture />
 
       <View style={[styles.photoFrame, { backgroundColor: theme.photoPanel, borderRadius: radius.xl, width: photoWidth }]}>
         {photo ? (
@@ -64,13 +61,31 @@ export function PetHero({ pet, occurrences, members, colorIndexFor }: Props) {
         {total > 0 ? <DayTrack occurrences={occurrences} /> : null}
         {members.length > 0 ? (
           <View style={styles.people}>
-            <PersonBadgeStack ringColor={theme.heroPrimary} people={members.map((member) => ({ colorIndex: colorIndexFor(member.id), id: member.id, initials: member.initials, name: member.name }))} size="sm" />
-            <MetaText numberOfLines={1} style={[styles.peopleNames, { color: theme.onHeroPrimaryMuted }]}>
+            <PersonBadgeStack ringColor={theme.onHeroPrimary} people={members.map((member) => ({ colorIndex: colorIndexFor(member.id), id: member.id, initials: member.initials, name: member.name }))} size="sm" />
+            <MetaText numberOfLines={2} style={[styles.peopleNames, { color: theme.onHeroPrimaryMuted }]}>
               {members.length === 1 ? 'yalnız siz bakıyorsunuz' : members.map((member) => member.name).join(' ve ')}
             </MetaText>
           </View>
         ) : null}
       </View>
+    </View>
+  );
+}
+
+/**
+ * "Ortak Hat" dokusu: markanın zaman hattı motifi, hero zemininde sessiz bir katman olarak.
+ * İkon değil çizgi-ve-düğüm; kenara kadar akar, metnin altına binmez.
+ */
+function RailTexture() {
+  const theme = useAppTheme();
+  return (
+    <View aria-hidden pointerEvents="none" style={styles.texture}>
+      {[0, 1, 2, 3, 4].map((row) => (
+        <View key={row} style={styles.textureRow}>
+          <View style={[styles.textureNode, { borderColor: theme.onHeroPrimary }]} />
+          <View style={[styles.textureLine, { backgroundColor: theme.onHeroPrimary, width: 56 + row * 22 }]} />
+        </View>
+      ))}
     </View>
   );
 }
@@ -90,15 +105,16 @@ function DayTrack({ occurrences }: { occurrences: TaskOccurrence[] }) {
 
 const styles = StyleSheet.create({
   root: { borderRadius: radius.xxl, flexDirection: 'row', gap: spacing.lg, minHeight: layout.heroMinHeight, overflow: 'hidden', padding: layout.cardPaddingLoose },
-  paws: { bottom: 0, left: 0, opacity: 0.1, position: 'absolute', right: 0, top: 0 },
-  pawLarge: { position: 'absolute', right: -18, top: -14, transform: [{ rotate: '18deg' }] },
-  pawSmall: { bottom: -10, position: 'absolute', right: 74, transform: [{ rotate: '-12deg' }] },
+  texture: { gap: spacing.sm, opacity: 0.14, position: 'absolute', right: -24, top: -6, transform: [{ rotate: '-14deg' }] },
+  textureRow: { alignItems: 'center', flexDirection: 'row', gap: spacing.xs },
+  textureNode: { borderRadius: radius.pill, borderWidth: 1.5, height: 7, width: 7 },
+  textureLine: { borderRadius: radius.pill, height: 1.5 },
   photoFrame: { aspectRatio: 4 / 5, overflow: 'hidden' },
   photo: { flex: 1 },
   photoFallback: { alignItems: 'center', flex: 1, gap: spacing.xs, justifyContent: 'center' },
-  copy: { flex: 1, gap: spacing.xs, justifyContent: 'center' },
+  copy: { flex: 1, gap: spacing.xs, justifyContent: 'center', minWidth: 0 },
   track: { flexDirection: 'row', gap: spacing.xs, marginTop: spacing.xs },
   segment: { borderRadius: radius.pill, borderWidth: 1, flex: 1, maxWidth: 48, minHeight: 6 },
-  people: { alignItems: 'center', flexDirection: 'row', gap: spacing.sm, marginTop: spacing.xs },
+  people: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginTop: spacing.xs },
   peopleNames: { ...typography.meta, flexShrink: 1 },
 });

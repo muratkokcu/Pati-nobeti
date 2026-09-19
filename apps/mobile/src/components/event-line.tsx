@@ -11,6 +11,8 @@ type Props = {
   colorIndex?: number;
   monochrome?: boolean;
   numberOfLines?: number;
+  /** Satırda plan saati zaten varsa kayıt saatini tekrarlama. */
+  showTime?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -19,19 +21,19 @@ type Props = {
  * "08:12 · Deniz yapıldı ekledi" — ayırıcı noktanın kendisi kişinin rengidir,
  * yani renk kaybolduğunda bile cümle aynı şekilde okunur.
  */
-export function EventLine({ event, colorIndex, monochrome = false, numberOfLines, style }: Props) {
+export function EventLine({ event, colorIndex, monochrome = false, numberOfLines, showTime = true, style }: Props) {
   const theme = useAppTheme();
   const index = colorIndex ?? personColorIndex(event.actorId);
   const person = personColorAt(theme, index);
   const statusColor = theme.status[event.outcome].fg;
   return (
     <View accessibilityLabel={eventSentence(event)} accessible style={[styles.root, style]}>
-      <Text style={[styles.time, { color: theme.ink }]}>{formatClock(event.recordedAt)}</Text>
+      {showTime ? <Text style={[styles.time, { color: theme.ink }]}>{formatClock(event.recordedAt)}</Text> : null}
       <View style={[styles.dot, { backgroundColor: monochrome ? theme.muted : person.fill }]} />
       <Text numberOfLines={numberOfLines} style={[styles.sentence, { color: theme.ink }]}>
         <Text style={styles.actor}>{event.actorName}</Text>
         <Text>{' '}</Text>
-        <Text style={[styles.outcome, { color: monochrome ? theme.ink : statusColor }]}>{outcomeWord(event.outcome)}</Text>
+        <Text style={[styles.outcome, { color: monochrome ? theme.ink : statusColor }]}>{`“${outcomeWord(event.outcome)}”`}</Text>
         <Text>{` ${eventVerb(event)}`}</Text>
       </Text>
     </View>

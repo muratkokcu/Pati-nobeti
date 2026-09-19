@@ -37,7 +37,7 @@ export function TaskCard({ occurrence, variant, onPress, colorIndexFor, style }:
   const summary = reason
     ? conflictNotice(reason)
     : last
-      ? `${last.actorName} ${outcomeWord(last.outcome)} ekledi`
+      ? `${last.actorName} “${outcomeWord(last.outcome)}” kaydetti`
       : status === 'overdue'
         ? `Planlanan ${time} geçti · kayıt yok`
         : 'Henüz kayıt yok';
@@ -55,9 +55,11 @@ export function TaskCard({ occurrence, variant, onPress, colorIndexFor, style }:
         <ClockText style={styles.nextTime}>{time}</ClockText>
         <View style={styles.nextCopy}>
           <BodyStrongText>{occurrence.title}</BodyStrongText>
-          <MetaText>{summary}</MetaText>
+          {last && !reason
+            ? <EventLine colorIndex={colorIndexFor?.(last.actorId)} event={last} numberOfLines={1} showTime={false} />
+            : <MetaText>{summary}</MetaText>}
         </View>
-        <StatusChip size="sm" status={status} />
+        {last && !reason ? null : <StatusChip size="sm" status={status} />}
         <Ionicons color={theme.muted} name="chevron-forward" size={layout.icon.md} />
       </Pressable>
     );

@@ -61,7 +61,7 @@ export const layout = {
   /** K-17: gövde metni 70 karakteri geçmesin. */
   measure: 560,
   maxContentWidth: 680,
-  scrollClearance: 120,
+  scrollClearance: 148,
   /** Hero / renk bloğu ve fotoğraf kartı ölçüleri. */
   heroMinHeight: 168,
   heroPhoto: 112,
