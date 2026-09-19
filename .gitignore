@@ -1,0 +1,34 @@
+# PatiNöbeti monorepo — kök .gitignore
+# Not: apps/mobile/.gitignore (Expo şablonu) zaten şunları kapsıyor:
+#   node_modules/, .expo/, dist/, web-build/, expo-env.d.ts, .env*.local,
+#   *.jks, *.p8, *.p12, *.key, *.pem, *.mobileprovision, /ios, /android
+# Burada yalnızca depo genelinde geçerli olması gereken kurallar var.
+
+# Bağımlılıklar
+node_modules/
+
+# Expo / derleme çıktıları
+.expo/
+dist/
+dist-*/
+web-build/
+*.tsbuildinfo
+
+# Ortam değişkenleri — örnek dosya dahil edilir
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# İmzalama anahtarları
+*.keystore
+
+# Günlükler
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# İşletim sistemi / editör
+.DS_Store
+Thumbs.db

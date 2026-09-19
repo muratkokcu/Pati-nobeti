@@ -1,0 +1,42 @@
+name: PatiNobeti quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: apps/mobile/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test -- --runInBand
+      - run: npm run lint
+      - run: npx expo export --platform android --output-dir dist-ci
+
+  database:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v2
+        with:
+          version: 2.84.2
+          github-token: ${{ github.token }}
+      - run: supabase start
+      - run: supabase db reset
+      - run: supabase test db
+      - run: supabase db lint --level warning
+      - name: Prove schema type generation succeeds
+        run: |
+          supabase gen types typescript --local > /tmp/database.types.generated.ts
+          test -s /tmp/database.types.generated.ts

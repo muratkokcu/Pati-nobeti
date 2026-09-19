@@ -1,0 +1,35 @@
+project_id = "patinobeti"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 2000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+
+[studio]
+enabled = false
+
+[inbucket]
+enabled = true
+port = 54324
+
+[realtime]
+enabled = true
+
+[auth]
+enabled = true
+site_url = "patinobeti://auth/callback"
+additional_redirect_urls = ["patinobeti://**", "http://localhost:8081/**"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
