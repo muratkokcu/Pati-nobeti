@@ -24,7 +24,7 @@ export default function AuthScreen() {
     setPending(true); setFeedback(null);
     try {
       if (intent === 'sign-in') await signIn(email, password);
-      else if (!await signUp(email, password)) setFeedback('E-postana gönderilen doğrulama bağlantısını açtıktan sonra giriş yapabilirsin.');
+      else if (!await signUp(email, password)) setFeedback('E-posta adresinize gönderilen doğrulama bağlantısını açtıktan sonra giriş yapabilirsiniz.');
     } catch { setFeedback(intent === 'sign-in' ? 'Giriş bilgileri doğrulanamadı. Bilgilerini kontrol edip yeniden dene.' : 'Hesap oluşturulamadı. E-posta adresini kontrol edip yeniden dene.'); }
     finally { setPending(false); }
   };

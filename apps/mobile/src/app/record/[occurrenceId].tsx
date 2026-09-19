@@ -11,8 +11,8 @@ import { useApp } from '@/state/app-context';
 
 const choices: { outcome: CareOutcome; title: string; description: string; icon: keyof typeof Ionicons.glyphMap }[] = [
   { outcome: 'done', title: 'Yapıldı', description: '“Yapıldı” olarak kullanıcı kaydı ekle.', icon: 'checkmark-circle-outline' },
-  { outcome: 'skipped', title: 'Atlandı', description: 'Bu zaman için uygulanmadığını kaydet.', icon: 'remove-circle-outline' },
-  { outcome: 'uncertain', title: 'Emin değilim', description: 'Durum net değilse bunu görünür kıl.', icon: 'help-circle-outline' },
+  { outcome: 'skipped', title: 'Atlandı', description: 'Bu zaman için uygulanmadığını kaydedin.', icon: 'remove-circle-outline' },
+  { outcome: 'uncertain', title: 'Emin değilim', description: 'Durum net değilse bunu kayda geçin.', icon: 'help-circle-outline' },
 ];
 
 export default function RecordScreen() {
@@ -30,13 +30,13 @@ export default function RecordScreen() {
   async function submit(outcome: CareOutcome, kind: CareEventKind = 'record') {
     setSaving(outcome); setError(null);
     try { setAddedEventId(await recordCare(occurrenceId, outcome, kind)); }
-    catch { setError('Kayıt eklenemedi. Verin değişmedi; yeniden deneyebilirsin.'); }
+    catch { setError('Kayıt eklenemedi. Verin değişmedi; yeniden deneyebilirsiniz.'); }
     finally { setSaving(null); }
   }
   async function undo() {
     if (!addedEventId) return;
     try { await undoCare(addedEventId); setAddedEventId(null); setAdding(false); }
-    catch { setError('Geri alma tamamlanamadı. Yeniden deneyebilirsin.'); }
+    catch { setError('Geri alma tamamlanamadı. Yeniden deneyebilirsiniz.'); }
   }
   return <ScrollView contentContainerStyle={styles.root}>
     <MetaText>{formatClock(occurrence.scheduledAt)} planı</MetaText>

@@ -3,13 +3,12 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, RefreshControl, StyleSheet, Switch, Text, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { PetHero } from '@/components/pet-hero';
-import { StatTiles } from '@/components/stat-tiles';
 import { WeekTrack } from '@/components/week-track';
 import { Screen, ScreenLoading } from '@/components/screen';
 import { TaskCard } from '@/components/task-card';
 import { BodyText, MetaText } from '@/components/typography';
 import { assignPersonColors, layout, palette, radius, spacing, typography } from '@/design/tokens';
-import { formatClock, standingEvents } from '@/domain/care';
+import { standingEvents } from '@/domain/care';
 import { currentOccurrences, dayKeyInTimeZone } from '@/domain/schedule';
 import { useApp } from '@/state/app-context';
 import { useRuntime } from '@/state/runtime-context';
@@ -37,7 +36,7 @@ export default function TodayScreen() {
   const currentMember = snapshot.members.find((member) => member.id === runtime.session?.user.id);
   const canSeeOffer = snapshot.isDemo || (snapshot.members.length >= 2 && currentMember?.role === 'owner');
   const connection = snapshot.isDemo
-    ? snapshot.isOffline ? 'Çevrimdışı prova açık' : 'Yerel demo'
+    ? snapshot.isOffline ? 'Çevrimdışı mod açık' : 'Yerel demo'
     : snapshot.isOffline ? 'Yerel görünüm · bağlantıda paylaşılır' : 'Hane bağlantısı açık';
   const refresh = async () => { setRefreshing(true); try { await refreshSnapshot(); } finally { setRefreshing(false); } };
 
@@ -52,19 +51,13 @@ export default function TodayScreen() {
         <MetaText numberOfLines={1} style={styles.statusCopy}>{connection}</MetaText>
       {snapshot.isDemo ? (
         <View style={styles.toggle}>
-          <MetaText style={styles.toggleLabel}>Çevrimdışı prova</MetaText>
-          <Switch hitSlop={{ bottom: 14, left: 14, right: 14, top: 14 }} accessibilityLabel={snapshot.isOffline ? 'Çevrimdışı provayı kapat' : 'Çevrimdışı provayı aç'} onValueChange={setOffline} trackColor={{ false: palette.line, true: palette.brass }} value={snapshot.isOffline} />
+          <MetaText style={styles.toggleLabel}>Çevrimdışı mod</MetaText>
+          <Switch hitSlop={{ bottom: 14, left: 14, right: 14, top: 14 }} accessibilityLabel={snapshot.isOffline ? 'Çevrimdışı modu kapat' : 'Çevrimdışı modu aç'} onValueChange={setOffline} trackColor={{ false: palette.line, true: palette.brass }} value={snapshot.isOffline} />
         </View>
       ) : null}
       </View>
       <MetaText numberOfLines={1} style={styles.date}>{date} · {planTimezone}</MetaText>
     </View>
-
-    <StatTiles tiles={[
-      { icon: 'checkmark-done', value: `${today.filter((occurrence) => standingEvents(occurrence.events).length > 0).length}/${today.length || 0}`, label: 'Bugün kaydedilen' },
-      { icon: 'time-outline', value: focus ? formatClock(focus.scheduledAt) : '—', label: focus ? 'Sıradaki bakım' : 'Bugün tamam' },
-      { icon: 'people-outline', value: `${snapshot.members.length}`, label: 'Bakım veren' },
-    ]} />
 
     {today.length === 0 ? (
       <View style={styles.empty}>
@@ -86,7 +79,7 @@ export default function TodayScreen() {
       <Pressable accessibilityRole="button" onPress={() => router.push('/paywall')} style={({ pressed }) => [styles.offer, pressed && styles.offerPressed]}>
         <View style={styles.offerCopy}>
           <Text style={styles.offerTitle}>Hanenin bakım geçmişini birlikte görün</Text>
-          <MetaText style={styles.offerMeta}>Plus önizlemesi · ikinci bakım veren her zaman ücretsiz</MetaText>
+          <MetaText style={styles.offerMeta}>İkinci bakım veren her zaman ücretsiz · Plus paketini görün</MetaText>
         </View>
         <Ionicons color={palette.brass} name="arrow-forward" size={layout.icon.lg} />
       </Pressable>

@@ -64,8 +64,8 @@ export default function OnboardingScreen() {
   return <Screen keyboardShouldPersistTaps="handled">
     <View style={styles.root}>
       <MetaText>{step} / 3</MetaText>
-      <DisplayText style={styles.heading}>{step === 1 ? 'Hanede nasıl görünmelisin?' : step === 2 ? 'Bakımı kimin için paylaşacaksınız?' : 'İlk bakım saatini ekle.'}</DisplayText>
-      <BodyText style={styles.intro}>{step === 1 ? 'Kayıtlarda bu ad görünür; e-posta adresin diğer üyelere gösterilmez.' : step === 2 ? 'Hane, aynı evcil hayvanın bakımını paylaşan kişileri bir araya getirir.' : 'Veterinerinin veya kendi bakım planının adını ve saatini aynen gir. PatiNöbeti tıbbi öneri üretmez.'}</BodyText>
+      <DisplayText style={styles.heading}>{step === 1 ? 'Hanede nasıl görünmek istersiniz?' : step === 2 ? 'Bakımı kimin için paylaşacaksınız?' : 'İlk bakım saatini ekleyin.'}</DisplayText>
+      <BodyText style={styles.intro}>{step === 1 ? 'Kayıtlarda bu ad görünür; e-posta adresiniz diğer üyelere gösterilmez.' : step === 2 ? 'Hane, aynı evcil hayvanın bakımını paylaşan kişileri bir araya getirir.' : 'Veterinerinizin verdiği veya kendi bakım planınızdaki adı ve saati aynen girin. PatiNöbeti tıbbi öneri üretmez.'}</BodyText>
       <View style={styles.form}>
         {step === 1 ? <Field label="Görünen ad" value={displayName} onChangeText={setDisplayName} placeholder="Örn. Murat" /> : null}
         {step === 2 ? <>

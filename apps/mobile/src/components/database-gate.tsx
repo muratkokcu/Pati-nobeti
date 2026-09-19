@@ -18,8 +18,8 @@ export function DatabaseGate({ children }: PropsWithChildren) {
   return <View style={styles.root}>
     <TitleText>{isSingleTabLock(error) ? 'PatiNöbeti başka bir sekmede açık' : 'Kayıt veritabanı açılamadı'}</TitleText>
     <BodyText style={styles.body}>{isSingleTabLock(error)
-      ? 'Tarayıcı önizlemesi aynı anda tek sekmede çalışır. Diğer sekmeyi kapatıp bu sayfayı yenile.'
-      : 'Uygulama bu cihazdaki kayıtları açamadı. Uygulamayı kapatıp yeniden açmayı dene. Kayıtların silinmedi; bu cihazda duruyor.'}</BodyText>
+      ? 'Tarayıcı sürümü aynı anda tek sekmede çalışır. Diğer sekmeyi kapatıp bu sayfayı yenileyin.'
+      : 'Uygulama bu cihazdaki kayıtları açamadı. Uygulamayı kapatıp yeniden açmayı deneyin. Kayıtların silinmedi; bu cihazda duruyor.'}</BodyText>
     <MetaText style={styles.detail}>{error.message}</MetaText>
   </View>;
 }

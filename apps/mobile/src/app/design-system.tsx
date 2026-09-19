@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Redirect } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { EventLine } from '@/components/event-line';
 import { PersonBadge, PersonBadgeStack } from '@/components/person-badge';
@@ -132,6 +133,8 @@ function Panel({ scheme, heading }: { scheme: SchemeName; heading: string }) {
 }
 
 export default function DesignSystemScreen() {
+  // İç geliştirme aracı: üretim paketinde erişilebilir olmamalı.
+  if (!__DEV__) return <Redirect href="/" />;
   return (
     <ScrollView contentContainerStyle={styles.root}>
       <Panel heading="Açık tema" scheme="light" />
