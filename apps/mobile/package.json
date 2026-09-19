@@ -53,6 +53,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
+    "preview:web": "expo export --platform web --output-dir dist-preview && node scripts/serve-web-preview.mjs dist-preview 8081",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
     "test": "jest --runInBand"

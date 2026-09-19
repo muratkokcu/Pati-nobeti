@@ -35,16 +35,18 @@ export function mapRemoteSnapshot(data: RemoteSnapshotData, now = new Date()): A
 }
 
 export function mergeRemoteWithPending(remote: AppSnapshot, local: AppSnapshot): AppSnapshot {
-  const pending = local.occurrences.flatMap((occurrence) => occurrence.events).filter((event) => event.syncState !== 'synced');
+  // Care events are append-only on the server. A pull may have started before a
+  // local command was acknowledged, so an older response must not erase an
+  // event that is already marked as synced in the local cache.
+  const localEvents = local.occurrences.flatMap((occurrence) => occurrence.events);
   const remoteOccurrenceIds = new Set(remote.occurrences.map((occurrence) => occurrence.id));
   const merged = remote.occurrences.map((occurrence) => {
     const known = new Set(occurrence.events.map((event) => event.id));
-    const localEvents = pending.filter((event) => event.occurrenceId === occurrence.id && !known.has(event.id));
-    return localEvents.length ? { ...occurrence, events: [...occurrence.events, ...localEvents].sort((a, b) => a.recordedAt.localeCompare(b.recordedAt)) } : occurrence;
+    const missingLocalEvents = localEvents.filter((event) => event.occurrenceId === occurrence.id && !known.has(event.id));
+    return missingLocalEvents.length ? { ...occurrence, events: [...occurrence.events, ...missingLocalEvents].sort((a, b) => a.recordedAt.localeCompare(b.recordedAt)) } : occurrence;
   });
-  const orphanedPending = local.occurrences
+  const orphanedLocal = local.occurrences
     .filter((occurrence) => !remoteOccurrenceIds.has(occurrence.id))
-    .map((occurrence) => ({ ...occurrence, events: occurrence.events.filter((event) => event.syncState !== 'synced') }))
     .filter((occurrence) => occurrence.events.length > 0);
-  return { ...remote, occurrences: [...merged, ...orphanedPending].sort((a, b) => a.scheduledAt.localeCompare(b.scheduledAt)) };
+  return { ...remote, occurrences: [...merged, ...orphanedLocal].sort((a, b) => a.scheduledAt.localeCompare(b.scheduledAt)) };
 }

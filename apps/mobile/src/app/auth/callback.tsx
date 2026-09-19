@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams, type Href } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { ScreenLoading } from '@/components/screen';
@@ -7,7 +7,7 @@ import { getPendingInvite } from '@/data/pending-invite';
 import { useRuntime } from '@/state/runtime-context';
 
 export default function AuthCallbackScreen() {
-  const { code, error_description: errorDescription } = useLocalSearchParams<{ code?: string; error_description?: string }>();
+  const { code, error_description: errorDescription, next } = useLocalSearchParams<{ code?: string; error_description?: string; next?: string }>();
   const { client } = useRuntime();
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
@@ -19,11 +19,12 @@ export default function AuthCallbackScreen() {
       const { error: exchangeError } = await client.auth.exchangeCodeForSession(code);
       if (!active) return;
       if (exchangeError) { setError('E-posta doğrulaması tamamlanamadı. Bağlantıyı yeniden açmayı dene.'); return; }
+      if (next === '/auth/reset') { router.replace(next as Href); return; }
       const token = await getPendingInvite();
       router.replace(token ? `/invite/${token}` : '/');
     });
     return () => { active = false; };
-  }, [client, code, errorDescription]);
+  }, [client, code, errorDescription, next]);
   if (!error) return <ScreenLoading />;
   return <View style={styles.root}><Text accessibilityRole="header" style={styles.title}>Doğrulama tamamlanamadı</Text><Text accessibilityRole="alert" style={styles.body}>{error}</Text><Pressable accessibilityRole="button" onPress={() => router.replace('/auth')} style={styles.button}><Text style={styles.buttonText}>Girişe dön</Text></Pressable></View>;
 }

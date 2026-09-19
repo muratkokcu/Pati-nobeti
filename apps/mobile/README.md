@@ -23,7 +23,13 @@ npm run typecheck
 npm run lint
 npm test
 npx expo export --platform android
+npm run preview:web
 ```
+
+`preview:web`, web export'unu `http://localhost:8081` üzerinde SQLite worker'ın
+gerektirdiği COEP/COOP başlıklarıyla sunar. Düz bir statik dosya sunucusu beyaz
+ekran üretebilir. Web yalnız demo incelemesi içindir ve tarayıcı sekmesi boyunca
+geçerli bellek-içi veritabanı kullanır; kalıcılık ve şifreleme native build'dedir.
 
 Native geliştirme için `npm run android` veya `npm run ios` ile development
 build kullanın. Ortam anahtarları için `.env.example` dosyasını esas alın.

@@ -15,7 +15,7 @@ export type Database = {
         { id: string; household_id: string; plan_id: string; occurrence_key: string; actor_id: string; outcome: 'done' | 'skipped' | 'uncertain'; kind?: 'record' | 'resolution'; note?: string | null; recorded_at?: string; created_at?: string }
       >;
       household_invitations: Table<{ id: string; household_id: string; token_hash: string; role: 'caregiver'; created_by: string; expires_at: string; accepted_at: string | null; accepted_by: string | null; revoked_at: string | null; created_at: string }>;
-      product_events: Table<{ id: string; user_id: string; household_id: string | null; event_name: 'owner_created' | 'invite_shared' | 'invite_accepted' | 'shared_state_viewed' | 'paywall_viewed'; properties: Json; occurred_at: string }, { id?: string; user_id: string; household_id?: string | null; event_name: 'owner_created' | 'invite_shared' | 'invite_accepted' | 'shared_state_viewed' | 'paywall_viewed'; properties?: Json; occurred_at?: string }>;
+      product_events: Table<{ id: string; user_id: string; household_id: string | null; event_name: 'owner_created' | 'invite_shared' | 'invite_accepted' | 'shared_state_viewed' | 'paywall_viewed' | 'paywall_interest'; properties: Json; occurred_at: string }, { id?: string; user_id: string; household_id?: string | null; event_name: 'owner_created' | 'invite_shared' | 'invite_accepted' | 'shared_state_viewed' | 'paywall_viewed' | 'paywall_interest'; properties?: Json; occurred_at?: string }>;
     };
     Views: Record<string, never>;
     Functions: {
@@ -27,7 +27,7 @@ export type Database = {
       revoke_household_invite: { Args: { target_invite: string }; Returns: undefined };
       record_care_event: { Args: { event_id: string; target_household: string; target_plan: string; target_occurrence: string; event_actor: string; event_outcome: 'done' | 'skipped' | 'uncertain'; event_kind: 'record' | 'resolution'; event_note: string | null; event_recorded_at: string }; Returns: string };
     };
-    Enums: { member_role: 'owner' | 'caregiver'; care_outcome: 'done' | 'skipped' | 'uncertain'; care_event_kind: 'record' | 'resolution'; pet_species: 'cat' | 'dog' | 'other'; product_event_name: 'owner_created' | 'invite_shared' | 'invite_accepted' | 'shared_state_viewed' | 'paywall_viewed' };
+    Enums: { member_role: 'owner' | 'caregiver'; care_outcome: 'done' | 'skipped' | 'uncertain'; care_event_kind: 'record' | 'resolution'; pet_species: 'cat' | 'dog' | 'other'; product_event_name: 'owner_created' | 'invite_shared' | 'invite_accepted' | 'shared_state_viewed' | 'paywall_viewed' | 'paywall_interest' };
     CompositeTypes: Record<string, never>;
   };
 };

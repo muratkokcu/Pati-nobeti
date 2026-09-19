@@ -6,7 +6,7 @@ create type public.member_role as enum ('owner', 'caregiver');
 create type public.care_outcome as enum ('done', 'skipped', 'uncertain');
 create type public.care_event_kind as enum ('record', 'resolution');
 create type public.pet_species as enum ('cat', 'dog', 'other');
-create type public.product_event_name as enum ('owner_created', 'invite_shared', 'invite_accepted', 'shared_state_viewed', 'paywall_viewed');
+create type public.product_event_name as enum ('owner_created', 'invite_shared', 'invite_accepted', 'shared_state_viewed', 'paywall_viewed', 'paywall_interest');
 
 create table public.households (
   id uuid primary key default gen_random_uuid(),

@@ -22,7 +22,7 @@ Demo; gerçek hesap, Supabase eşitlemesi, push teslimi veya ödeme yapıyormuş
 
 - `npm run typecheck`: başarılı; ölü `/explore` referansı güncel plana yönlendirildi
 - `npm run lint`: başarılı
-- `npm test`: 31/31 başarılı (`care`, timezone/gün devri, ACK-temelli outbox,
+- `npm test`: 36/36 başarılı (`care`, timezone/gün devri, ACK-temelli outbox,
   sync motoru, uzak hata sözleşmesi, ortak snapshot merge/history ve atomik
   SecureStore nesil değişimi)
 - `npx expo export --platform android`: başarılı production bundle

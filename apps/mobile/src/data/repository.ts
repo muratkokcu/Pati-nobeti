@@ -20,6 +20,48 @@ const SNAPSHOT_KEY = 'demo_snapshot';
 type RepositoryOptions = { snapshotKey?: string; scopeKey?: string; initialSnapshot?: () => AppSnapshot; queueAllWrites?: boolean; normalizeStored?: boolean };
 export type RecordCareInput = { occurrenceId: string; outcome: CareOutcome; actorId: string; actorName: string; kind?: CareEventKind; note?: string };
 export type OutboxCommand = { commandId: string; commandType: 'record_care'; payload: string; baseVersion: number; retryCount: number; createdAt: string; leaseToken?: string };
+export type ScopeLease = { scope: string | null; generation: number };
+
+/** Coordinates async work whose result is only valid for one signed-in scope. */
+export class ScopedWorkCoordinator {
+  private scope: string | null = null;
+  private generation = 0;
+  private readonly pending = new Map<number, { lease: ScopeLease; tasks: Set<Promise<unknown>> }>();
+
+  activate(scope: string | null): ScopeLease {
+    if (scope !== this.scope) { this.scope = scope; this.generation += 1; }
+    return { scope: this.scope, generation: this.generation };
+  }
+
+  isCurrent(lease: ScopeLease) {
+    return lease.scope === this.scope && lease.generation === this.generation;
+  }
+
+  track<T>(lease: ScopeLease, task: Promise<T>): Promise<T> {
+    let entry = this.pending.get(lease.generation);
+    if (!entry) {
+      entry = { lease, tasks: new Set() };
+      this.pending.set(lease.generation, entry);
+    }
+    const tracked = task.finally(() => {
+      const current = this.pending.get(lease.generation);
+      current?.tasks.delete(tracked);
+      if (current?.tasks.size === 0) this.pending.delete(lease.generation);
+    });
+    entry.tasks.add(tracked);
+    return tracked;
+  }
+
+  async settleScopePrefix(prefix: string) {
+    while (true) {
+      const tasks = [...this.pending.values()]
+        .filter((entry) => entry.lease.scope?.startsWith(prefix))
+        .flatMap((entry) => [...entry.tasks]);
+      if (tasks.length === 0) return;
+      await Promise.allSettled(tasks);
+    }
+  }
+}
 
 export interface CareRepository {
   getSnapshot(): Promise<AppSnapshot>;

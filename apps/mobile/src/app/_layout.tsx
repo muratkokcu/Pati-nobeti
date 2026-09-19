@@ -3,6 +3,7 @@ import { SQLiteProvider } from 'expo-sqlite';
 import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
 import { useEffect, useRef } from 'react';
+import { Platform } from 'react-native';
 import { migrateDatabase } from '@/data/migrations';
 import { AppProvider } from '@/state/app-context';
 import { RuntimeProvider } from '@/state/runtime-context';
@@ -29,7 +30,7 @@ function NotificationNavigator() {
 
 export default function RootLayout() {
   return (
-    <SQLiteProvider databaseName="patinobeti-v2.db" onInit={migrateDatabase}>
+    <SQLiteProvider databaseName={Platform.OS === 'web' ? ':memory:' : 'patinobeti-v2.db'} onInit={migrateDatabase}>
       <RuntimeProvider><AppProvider>
         <StatusBar style="dark" />
         <NotificationNavigator />
@@ -37,6 +38,7 @@ export default function RootLayout() {
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="auth" options={{ headerShown: false }} />
           <Stack.Screen name="auth/callback" options={{ headerShown: false }} />
+          <Stack.Screen name="auth/reset" options={{ headerShown: false }} />
           <Stack.Screen name="onboarding" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="record/[occurrenceId]" options={{ presentation: 'modal', title: 'Durum kaydı' }} />

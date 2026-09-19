@@ -9,7 +9,7 @@ import { getPendingInvite } from '@/data/pending-invite';
 
 export default function AuthScreen() {
   const { next } = useLocalSearchParams<{ next?: string }>();
-  const { mode, session, signIn, signUp, configurationError } = useRuntime();
+  const { mode, session, signIn, signUp, requestPasswordReset, configurationError } = useRuntime();
   const [intent, setIntent] = useState<'sign-in' | 'sign-up'>('sign-in');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +28,15 @@ export default function AuthScreen() {
     } catch { setFeedback(intent === 'sign-in' ? 'Giriş bilgileri doğrulanamadı. Bilgilerini kontrol edip yeniden dene.' : 'Hesap oluşturulamadı. E-posta adresini kontrol edip yeniden dene.'); }
     finally { setPending(false); }
   };
+  const resetPassword = async () => {
+    if (!email.includes('@')) { setFeedback('Parola bağlantısı için geçerli e-posta adresini gir.'); return; }
+    setPending(true); setFeedback(null);
+    try {
+      await requestPasswordReset(email);
+      setFeedback('E-posta adresi kayıtlıysa parola yenileme bağlantısı gönderildi.');
+    } catch { setFeedback('Parola yenileme bağlantısı gönderilemedi. Bağlantını kontrol edip yeniden dene.'); }
+    finally { setPending(false); }
+  };
   return <Screen keyboardShouldPersistTaps="handled">
     <View style={styles.root}>
       <DisplayText>Bakımı birlikte netleştir.</DisplayText>
@@ -37,12 +46,13 @@ export default function AuthScreen() {
         <Pressable accessibilityRole="tab" accessibilityState={{ selected: intent === 'sign-in' }} onPress={() => { setIntent('sign-in'); setFeedback(null); }} style={[styles.switch, intent === 'sign-in' && styles.switchActive]}><Text style={[styles.switchText, intent === 'sign-in' && styles.switchTextActive]}>Giriş yap</Text></Pressable>
         <Pressable accessibilityRole="tab" accessibilityState={{ selected: intent === 'sign-up' }} onPress={() => { setIntent('sign-up'); setFeedback(null); }} style={[styles.switch, intent === 'sign-up' && styles.switchActive]}><Text style={[styles.switchText, intent === 'sign-up' && styles.switchTextActive]}>Hesap oluştur</Text></Pressable>
       </View>
-      <Text style={styles.label}>E-posta</Text>
-      <TextInput autoCapitalize="none" autoComplete="email" editable={!pending && !configurationError} inputMode="email" onChangeText={setEmail} placeholder="ad@ornek.com" placeholderTextColor={palette.muted} style={styles.input} value={email} />
-      <Text style={styles.label}>Parola</Text>
-      <TextInput autoCapitalize="none" autoComplete={intent === 'sign-in' ? 'current-password' : 'new-password'} editable={!pending && !configurationError} onChangeText={setPassword} placeholder="En az 8 karakter" placeholderTextColor={palette.muted} secureTextEntry style={styles.input} value={password} />
+      <Text nativeID="email-label" style={styles.label}>E-posta</Text>
+      <TextInput accessibilityLabelledBy="email-label" autoCapitalize="none" autoComplete="email" editable={!pending && !configurationError} inputMode="email" onChangeText={setEmail} placeholder="ad@ornek.com" placeholderTextColor={palette.muted} style={styles.input} value={email} />
+      <Text nativeID="password-label" style={styles.label}>Parola</Text>
+      <TextInput accessibilityLabelledBy="password-label" autoCapitalize="none" autoComplete={intent === 'sign-in' ? 'current-password' : 'new-password'} editable={!pending && !configurationError} onChangeText={setPassword} placeholder="En az 8 karakter" placeholderTextColor={palette.muted} secureTextEntry style={styles.input} value={password} />
       {feedback ? <Text accessibilityLiveRegion="polite" style={styles.feedback}>{feedback}</Text> : null}
       <Pressable accessibilityRole="button" accessibilityState={{ disabled: pending || Boolean(configurationError) }} disabled={pending || Boolean(configurationError)} onPress={() => void submit()} style={({ pressed }) => [styles.primary, pressed && styles.pressed, (pending || configurationError) && styles.disabled]}><Text style={styles.primaryText}>{pending ? 'İşleniyor…' : intent === 'sign-in' ? 'Giriş yap' : 'Hesap oluştur'}</Text></Pressable>
+      {intent === 'sign-in' ? <Pressable accessibilityRole="button" accessibilityState={{ disabled: pending || Boolean(configurationError) }} disabled={pending || Boolean(configurationError)} onPress={() => void resetPassword()} style={styles.resetAction}><Text style={styles.resetText}>Parolamı unuttum</Text></Pressable> : null}
       <MetaText style={styles.disclosure}>Bu giriş yalnızca Supabase ortamı açıkça yapılandırıldığında görünür. Yerel demo kayıtları gerçek haneye aktarılmaz.</MetaText>
     </View>
   </Screen>;
@@ -59,4 +69,5 @@ const styles = StyleSheet.create({
   feedback: { color: palette.overdue, fontSize: 14, fontWeight: '600', lineHeight: 20, marginBottom: spacing.md },
   primary: { alignItems: 'center', backgroundColor: palette.primary, borderRadius: radius.md, justifyContent: 'center', minHeight: touchTarget + 4, paddingHorizontal: spacing.lg },
   primaryText: { color: palette.white, fontSize: 16, fontWeight: '700' }, pressed: { opacity: 0.78 }, disabled: { opacity: 0.48 }, disclosure: { marginTop: spacing.lg },
+  resetAction: { alignItems: 'center', justifyContent: 'center', marginTop: spacing.sm, minHeight: touchTarget }, resetText: { color: palette.primary, fontSize: 15, fontWeight: '700' },
 });

@@ -32,20 +32,27 @@ Son güncelleme: 19 Eylül 2026
   adını tamamlar. Onboarding sonunda owner doğrudan davet CTA'sının bulunduğu Hane'ye gider.
 - Ham davet token'ı ekranda gösterilmez veya kalıcı istemci state'ine yazılmaz;
   hesap doğrulama devamlılığı için native SecureStore'da en fazla 7 gün tutulur,
-  kabul/ret sonrası silinir. Web'de yalnız sessionStorage kullanılır.
+  kabul/vazgeçme sonrası silinir. Web'de yalnız sessionStorage kullanılır.
 - Native SQLite SQLCipher ile açılır; 256-bit rastgele anahtar SecureStore'dadır.
   Çıkışta kullanıcıya ait cache/outbox satırları temizlenir. SQLCipher Expo Go'da
   çalışmadığı için development/standalone build zorunludur.
 - Sync drain process içinde mutex ile tekilleştirilir; her claim ayrı lease token
   taşır ve ACK/fail aynı token CAS'i olmadan kabul edilmez. Snapshot merge ve
   ACK/fail okumaları transaction içine alındı.
-- Beş temel huni olayı (`owner_created`, `invite_shared`, `invite_accepted`,
-  `shared_state_viewed`, `paywall_viewed`) RLS korumalı append-only tabloya yazılır.
-- PKCE e-posta doğrulama callback rotası ve kalıcı pending-invite dönüşü eklendi.
+- Altı temel huni olayı (`owner_created`, `invite_shared`, `invite_accepted`,
+  `shared_state_viewed`, `paywall_viewed`, `paywall_interest`) RLS korumalı
+  append-only tabloya yazılır.
+- PKCE e-posta doğrulama callback rotası, parola yenileme ve kalıcı pending-invite
+  dönüşü eklendi.
+- Eski pull yanıtı yerel ACK edilmiş append-only eventi silemez; eventler ID bazında
+  monoton birleşir. Scope/generation lease ve çıkış bariyeri, eski kullanıcı işinin
+  cache purge sonrasında DB/UI yazmasını engeller.
+- Başarılı hane listesi kullanıcı scope'unda şifreli cihaz cache'ine alınır; çevrimdışı
+  soğuk açılış ağ hatasını yanlışlıkla oturum kaybına dönüştürmez.
 
 ## Kanıt durumu
 
-- Mobil: typecheck, uyarısız lint, 31/31 Jest testi ve Android production export başarılı.
+- Mobil: typecheck, uyarısız lint, 36/36 Jest testi ve web production export başarılı.
 - Arayüz: yeni auth/onboarding/davet/hane yüzeylerinde Impeccable mekanik taraması
   bulgu üretmedi. Bu, fiziksel cihaz kullanılabilirlik testi yerine geçmez.
 - SQL: 35 davranışsal pgTAP assertion yazıldı fakat bu makinede Docker/Supabase
@@ -60,7 +67,7 @@ Son güncelleme: 19 Eylül 2026
    `db lint` çalıştırmak.
 2. SQL sonucuna göre migration'ı düzeltmek; Supabase tarafından üretilmiş TypeScript
    tiplerini commit edip drift kontrolü eklemek; ardından staging'e uygulamak.
-3. Auth deep-link/e-posta doğrulama, verified Universal/App Link ve parola kurtarmayı tamamlamak.
+3. Auth deep-link/e-posta doğrulamayı staging'de kanıtlamak ve verified Universal/App Link kurmak.
 4. İki gerçek cihazlı davet →
    iki aktör kaydı → ortak geçmiş senaryosunu kanıtlamak.
 

@@ -3,7 +3,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { AppState, Pressable, StyleSheet, Text, View } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
-import { DemoSQLiteRepository } from '@/data/repository';
+import { DemoSQLiteRepository, purgeProductionDataForUser, ScopedWorkCoordinator, type ScopeLease } from '@/data/repository';
 import { drainCareOutbox } from '@/data/sync-engine';
 import type { AppSnapshot, CareEvent, CareEventKind, CareOutcome } from '@/domain/types';
 import { palette, radius, spacing, touchTarget } from '@/design/tokens';
@@ -25,27 +25,59 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const db = useSQLiteContext();
   const repository = useMemo(() => new DemoSQLiteRepository(db), [db]);
   const runtime = useRuntime();
+  const scopeIdentity = runtime.session?.user.id && runtime.activeHouseholdId ? `production:${runtime.session.user.id}:${runtime.activeHouseholdId}` : null;
+  const [workCoordinator] = useState(() => new ScopedWorkCoordinator());
+  const scopeLease = useMemo(() => workCoordinator.activate(scopeIdentity), [scopeIdentity, workCoordinator]);
   const productionRepository = useMemo(() => {
-    const userId = runtime.session?.user.id;
-    const householdId = runtime.activeHouseholdId;
-    if (!userId || !householdId) return null;
-    const scope = `production:${userId}:${householdId}`;
-    return new DemoSQLiteRepository(db, { snapshotKey: scope, scopeKey: scope, queueAllWrites: true, normalizeStored: false });
-  }, [db, runtime.session?.user.id, runtime.activeHouseholdId]);
+    if (!scopeIdentity) return null;
+    return new DemoSQLiteRepository(db, { snapshotKey: scopeIdentity, scopeKey: scopeIdentity, queueAllWrites: true, normalizeStored: false });
+  }, [db, scopeIdentity]);
   const [snapshot, setSnapshot] = useState<AppSnapshot | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
-  const syncInFlight = useRef<Promise<void> | null>(null);
+  const syncInFlight = useRef<{ lease: ScopeLease; task: Promise<void> } | null>(null);
+  const pullInFlight = useRef<{ lease: ScopeLease; task: Promise<AppSnapshot | null> } | null>(null);
+  const previousUserId = useRef(runtime.session?.user.id ?? null);
+
+  useEffect(() => {
+    const currentUserId = runtime.session?.user.id ?? null;
+    const staleUserId = previousUserId.current;
+    previousUserId.current = currentUserId;
+    if (!staleUserId || staleUserId === currentUserId) return;
+    // The screen-level purge happens before auth sign-out. This second, barred
+    // purge closes the race with work that was already in flight at that time.
+    void workCoordinator
+      .settleScopePrefix(`production:${staleUserId}:`)
+      .then(() => purgeProductionDataForUser(db, staleUserId))
+      .catch(() => undefined);
+  }, [db, runtime.session?.user.id, workCoordinator]);
+
+  const pullProductionSnapshot = useCallback(() => {
+    if (!runtime.gateway || !runtime.activeHouseholdId || !productionRepository || !scopeLease.scope) return Promise.resolve(null);
+    const activePull = pullInFlight.current;
+    if (activePull && activePull.lease.generation === scopeLease.generation) return activePull.task;
+    const rawTask = (async () => {
+      const remote = await runtime.gateway!.fetchSnapshot(runtime.activeHouseholdId!);
+      if (!workCoordinator.isCurrent(scopeLease)) return null;
+      const hydrated = await productionRepository.hydrateSnapshot(remote);
+      return workCoordinator.isCurrent(scopeLease) ? hydrated : null;
+    })();
+    const task = workCoordinator.track(scopeLease, rawTask);
+    pullInFlight.current = { lease: scopeLease, task };
+    void task.finally(() => { if (pullInFlight.current?.task === task) pullInFlight.current = null; }).catch(() => undefined);
+    return task;
+  }, [productionRepository, runtime.gateway, runtime.activeHouseholdId, scopeLease, workCoordinator]);
 
   const loadSnapshot = useCallback(async () => {
     if (runtime.mode === 'demo') return repository.getSnapshot();
     if (!runtime.session || !runtime.gateway || !runtime.activeHouseholdId || !productionRepository) return null;
-    try { return await productionRepository.hydrateSnapshot(await runtime.gateway.fetchSnapshot(runtime.activeHouseholdId)); }
+    try { return await pullProductionSnapshot(); }
     catch {
+      if (!workCoordinator.isCurrent(scopeLease)) return null;
       const cached = await productionRepository.getSnapshot();
-      return { ...cached, isOffline: true };
+      return workCoordinator.isCurrent(scopeLease) ? { ...cached, isOffline: true } : null;
     }
-  }, [repository, productionRepository, runtime.mode, runtime.session, runtime.gateway, runtime.activeHouseholdId]);
+  }, [repository, productionRepository, runtime.mode, runtime.session, runtime.gateway, runtime.activeHouseholdId, pullProductionSnapshot, scopeLease, workCoordinator]);
   const retryLoad = useCallback(async () => {
     setIsLoading(true); setLoadError(false);
     try { setSnapshot(await loadSnapshot()); }
@@ -62,26 +94,36 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       .finally(() => { if (active) setIsLoading(false); });
     return () => { active = false; };
   }, [loadSnapshot]);
-  const refreshSnapshot = useCallback(async () => { setSnapshot(await loadSnapshot()); }, [loadSnapshot]);
+  const refreshSnapshot = useCallback(async () => {
+    const next = await loadSnapshot();
+    if (runtime.mode === 'demo' || workCoordinator.isCurrent(scopeLease)) setSnapshot(next);
+  }, [loadSnapshot, runtime.mode, scopeLease, workCoordinator]);
   const syncProduction = useCallback(async () => {
-    if (syncInFlight.current) return syncInFlight.current;
-    const task = (async () => {
+    const activeSync = syncInFlight.current;
+    if (activeSync && activeSync.lease.generation === scopeLease.generation) return activeSync.task;
+    const rawTask = (async () => {
       if (!productionRepository || !runtime.gateway || !runtime.activeHouseholdId) return;
       let cached: AppSnapshot;
       try { cached = await productionRepository.getSnapshot(); }
       catch { return; }
+      if (!workCoordinator.isCurrent(scopeLease)) return;
       await drainCareOutbox(productionRepository, runtime.gateway, async (_command, occurrenceId) => {
         const occurrence = cached.occurrences.find((item) => item.id === occurrenceId);
         if (!occurrence) throw new Error('Eşitlenecek bakım saati yerel cache içinde bulunamadı.');
         return { householdId: runtime.activeHouseholdId!, planId: occurrence.planId, occurrenceKey: occurrenceId };
       });
+      if (!workCoordinator.isCurrent(scopeLease)) return;
       setSnapshot(await productionRepository.getSnapshot());
-      try { setSnapshot(await productionRepository.hydrateSnapshot(await runtime.gateway.fetchSnapshot(runtime.activeHouseholdId))); }
+      try {
+        const pulled = await pullProductionSnapshot();
+        if (pulled && workCoordinator.isCurrent(scopeLease)) setSnapshot(pulled);
+      }
       catch { /* Yerel ACK/failed durumu görünür kalır; pull daha sonra yinelenir. */ }
     })();
-    syncInFlight.current = task;
-    try { await task; } finally { if (syncInFlight.current === task) syncInFlight.current = null; }
-  }, [productionRepository, runtime.gateway, runtime.activeHouseholdId]);
+    const task = workCoordinator.track(scopeLease, rawTask);
+    syncInFlight.current = { lease: scopeLease, task };
+    try { await task; } finally { if (syncInFlight.current?.task === task) syncInFlight.current = null; }
+  }, [productionRepository, runtime.gateway, runtime.activeHouseholdId, pullProductionSnapshot, scopeLease, workCoordinator]);
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (state) => {
       if (state === 'active') void (runtime.mode === 'production' ? syncProduction() : refreshSnapshot()).catch(() => setLoadError(true));
@@ -115,21 +157,26 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       const occurrence = snapshot.occurrences.find((item) => item.id === occurrenceId);
       if (!occurrence) throw new Error('Bakım saati bulunamadı.');
       const actor = snapshot.members.find((member) => member.id === runtime.session?.user.id);
-      event = await productionRepository.recordCare({ occurrenceId, outcome, actorId: runtime.session.user.id, actorName: actor?.name ?? 'Ben', kind });
-      setSnapshot(await productionRepository.getSnapshot());
-      void syncProduction().catch(() => undefined);
+      event = await workCoordinator.track(scopeLease, productionRepository.recordCare({ occurrenceId, outcome, actorId: runtime.session.user.id, actorName: actor?.name ?? 'Ben', kind }));
+      if (workCoordinator.isCurrent(scopeLease)) {
+        setSnapshot(await productionRepository.getSnapshot());
+        void syncProduction().catch(() => undefined);
+      }
     } else {
       event = await repository.recordCare({ occurrenceId, outcome, actorId: 'member-murat', actorName: 'Murat', kind });
       setSnapshot(await repository.getSnapshot());
     }
     await Haptics.selectionAsync();
     return event.id;
-  }, [repository, productionRepository, runtime, snapshot, syncProduction]);
+  }, [repository, productionRepository, runtime, snapshot, syncProduction, scopeLease, workCoordinator]);
   const undoCare = useCallback(async (eventId: string) => {
     const target = runtime.mode === 'production' ? productionRepository : repository;
     if (!target) throw new Error('Yerel kayıt deposu hazır değil.');
-    await target.undoCare(eventId); setSnapshot(await target.getSnapshot());
-  }, [repository, productionRepository, runtime.mode]);
+    if (runtime.mode === 'production') {
+      await workCoordinator.track(scopeLease, target.undoCare(eventId));
+      if (workCoordinator.isCurrent(scopeLease)) setSnapshot(await target.getSnapshot());
+    } else { await target.undoCare(eventId); setSnapshot(await target.getSnapshot()); }
+  }, [repository, productionRepository, runtime.mode, scopeLease, workCoordinator]);
   const resetDemo = useCallback(async () => { if (runtime.mode === 'demo') setSnapshot(await repository.resetDemo()); }, [repository, runtime.mode]);
   const setOffline = useCallback(async (value: boolean) => { if (runtime.mode === 'demo') setSnapshot(await repository.setOffline(value)); }, [repository, runtime.mode]);
   const value = useMemo(() => ({ snapshot, isLoading, recordCare, undoCare, refreshSnapshot, resetDemo, setOffline }), [snapshot, isLoading, recordCare, undoCare, refreshSnapshot, resetDemo, setOffline]);

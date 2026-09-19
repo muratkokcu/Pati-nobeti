@@ -21,14 +21,16 @@ Bu dosya kota/oturum kesintisinden sonra işi aynı noktadan sürdürmek içindi
 - Production dikey akışı auth, profil, atomik hane+pet+ilk plan, ortak snapshot,
   kullanıcı+hane scoped offline outbox, Realtime invalidation, 30 günlük geçmiş,
   kayıt ve davet üretme/önizleme/iptal/kabul seviyesine geldi.
-- Mobil kalite kapısı: typecheck/uyarısız lint, 31 Jest testi ve Android export yeşil.
+- Mobil kalite kapısı: typecheck/uyarısız lint, 36 Jest testi ve web export yeşil.
 - SQL sözleşmesi 35 pgTAP assertion'a çıktı ancak Docker/Supabase olmadığı için
   hâlâ çalıştırılmadı; bunu geçmiş sayma.
 - Sıradaki en yüksek teknik risk: SQL'i gerçek local/staging Supabase'da çalıştırmak,
   üretilmiş tipleri almak ve iki gerçek cihazda offline/response-loss/outbox/realtime
   senaryosunu kanıtlamak.
-- Ardından parola kurtarma/e-posta deep link'i, verified Universal/App Link,
-  analytics, export/delete/KVKK ve store sandbox gelir.
+- Parola kurtarma/PKCE callback kodlandı; sırada gerçek e-posta deep-link kanıtı,
+  verified Universal/App Link, export/delete/KVKK ve store sandbox var.
+- Yerel web incelemesi `cd apps/mobile && npm run preview:web` ile 8081'de açılır;
+  bu komut SQLite worker için gerekli COEP/COOP başlıklarını ekler.
 
 ## Sürüm kontrolü — 19 Eylül 2026'dan itibaren
 

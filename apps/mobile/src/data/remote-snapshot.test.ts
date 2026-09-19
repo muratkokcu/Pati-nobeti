@@ -26,6 +26,15 @@ describe('remote snapshot mapping', () => {
     expect(mergeRemoteWithPending(acknowledged, withPending).occurrences.find((item) => item.id === occurrence.id)?.events).toHaveLength(1);
   });
 
+  it('does not let a stale pull erase an event that was acknowledged while the request was in flight', () => {
+    const local = createDemoSnapshot(new Date(2026, 8, 18, 9));
+    const occurrence = local.occurrences[1];
+    const acknowledged = { id: '550e8400-e29b-41d4-a716-446655440000', occurrenceId: occurrence.id, outcome: 'done' as const, actorId: 'user', actorName: 'Murat', recordedAt: '2026-09-18T20:01:00.000Z', syncState: 'synced' as const };
+    const localAfterAck = { ...local, occurrences: local.occurrences.map((item) => item.id === occurrence.id ? { ...item, events: [acknowledged] } : item) };
+    const staleRemote = { ...local, isDemo: false, occurrences: local.occurrences.map((item) => ({ ...item, events: [] })) };
+    expect(mergeRemoteWithPending(staleRemote, localAfterAck).occurrences.find((item) => item.id === occurrence.id)?.events).toEqual([acknowledged]);
+  });
+
   it('hydrates a remote event from the previous 30 days into history', () => {
     const snapshot = mapRemoteSnapshot({
       householdId: 'household', ownerId: 'owner', pet: { id: 'pet', name: 'Luna', species: 'cat' },

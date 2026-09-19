@@ -89,3 +89,31 @@ gerçek cihaz davranışı henüz derlenip kanıtlanmadı.
 Üç rol de son turda P0 kalmadığını belirterek yerel MVP'ye **GO** verdi. Mobil ürünün bulduğu son P0 olan ertesi gün hatırlatıcısının dünkü göreve gitmesi; AppState resume yenilemesi, güncel-gün çözümleme rotası, teslimat-bazlı response tekilleştirmesi ve 17. domain testiyle kapatıldı.
 
 Ortak karar yalnız açıkça beyan edilen cihaz-içi demo içindir. Gerçek veri kullanan dış pilot ve production için karar **NO-GO** olarak kalır.
+
+## Üçüncü ortak inceleme ve düzeltme turu — 19 Eylül 2026
+
+Üç rol aynı sürümü yeniden değerlendirdi. Ortak karar yerel demo için **GO**, gerçek
+verili dış pilot için **NO-GO** kaldı. İncelemede bulunan iki yeni teknik P0 aynı turda
+kapatıldı:
+
+- Eski bir pull yanıtı, istek sürerken ACK edilen append-only bakım olayını artık
+  görünümden düşüremez; uzak ve yerel olaylar ID bazında monoton birleşir.
+- Sync/pull/record/undo scope-generation lease ile izlenir. Kullanıcı veya hane
+  değişince eski işler DB/UI commit edemez; çıkış bariyeri işleri bekleyip son scoped
+  purge'u tekrarlar.
+
+Ek olarak çevrimdışı soğuk açılışta hane scope'u şifreli cihaz cache'inden geri
+yüklenir ve ağ hatası geçerli oturumu auth ekranına düşürmez. Parola yenileme PKCE
+callback'i, aktif daveti yeniden paylaşma, boş plan savunması ve ayrı `paywall_interest`
+olayı eklendi. Çoklu bakım veren, temel aktivasyon olduğu için Plus fayda listesinden
+çıkarıldı.
+
+Kanıt: typecheck, uyarısız lint, 8 suite/36 Jest testi, Impeccable taraması ve web
+production export başarılı. Web önizleme SQLite worker'ın ihtiyaç duyduğu COEP/COOP
+başlıklarıyla `npm run preview:web` üzerinden çalışır.
+
+Dış pilot NO-GO nedenleri değişmedi: migration+35 pgTAP gerçek Supabase'da koşmadı;
+iki fiziksel cihaz ve staging kanıtı yok; verified HTTPS App/Universal Link, KVKK,
+export/hesap silme ve store sandbox ödeme tamamlanmadı. Varsayılan launcher varlıkları,
+plan CRUD, gerçek cihaz erişilebilirlik matrisi ve timezone değişiminde reminder
+yeniden planlama P1 olarak açık.
