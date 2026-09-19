@@ -27,6 +27,7 @@ ikinci haftayı yönetemez.
 | `record/[occurrenceId].tsx` | Durum kaydı + çakışma netleştirme | tam |
 | `record/today/[planId].tsx` | Bildirimden gelen kayıt | tam |
 | `invite/[token].tsx` | Daveti kabul etme (davet edilen taraf) | tam |
+| `invite/new.tsx` | Davet oluşturma ve gönderme (davet eden taraf) | tam (QR ve rol/süre seçimi yok) |
 | `paywall.tsx` | Plus önizlemesi | kısmi — 20 satır, üründen görsel yok |
 | `design-system.tsx` | İç tasarım galerisi | tam (geliştirme aracı, mağazaya çıkmaz) |
 
@@ -36,7 +37,7 @@ ikinci haftayı yönetemez.
 
 | Eksik ekran | Neyi çözüyor | Kapatacağı bulgu |
 |---|---|---|
-| **Davet gönderme** (link + QR, rol ve süre seçimi) | İkinci bakım veren hiç eklenemiyor; aktivasyon hunisinin 2. adımı üründe yok | B-16, B-20, B-21 |
+| ~~**Davet gönderme**~~ → `invite/new.tsx` **yapıldı** (19 Eyl) | İkinci bakım veren artık davet edilebiliyor; QR ve süreli/rol seçimi hâlâ yok | B-16 kapandı · B-20, B-21 açık |
 | **Plan oluşturma / düzenleme / silme** | Kendi ilacını, saatini, tekrarını kuramıyor; herkes seed planıyla yaşıyor | B-24, B-25, B-26, B-27 |
 | **Kayıt düzeltme / geri alma** | Yanlış kayıt kalıcı; tek çıkış toptan sıfırlama | B-10, B-13 |
 | **Hatırlatıcı ve bildirim ayarları** (kişi başına) | Hatırlatıcı 20:00'ye sabit kodlu; kaçırılan bakım uyarısı yok | B-28…B-33 |
@@ -91,7 +92,7 @@ Açılış
 
 ## 6. Sıra önerisi
 
-1. **Davet gönderme** — huninin ölçülebilmesi buna bağlı, tek başına en kritik ekran.
+1. ~~Davet gönderme~~ — **yapıldı** (19 Eylül).
 2. **Plan oluşturma/düzenleme** — ürünü kullanıcının kendi gerçeğine bağlar.
 3. **Kayıt düzeltme + geri alma** — 10/10 persona istedi, tasarımı tartışmada bitti.
 4. **Hayvan profili + fotoğraf** — yeni hero gerçek veriyle ancak bununla çalışır.

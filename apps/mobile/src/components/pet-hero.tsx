@@ -42,7 +42,7 @@ export function PetHero({ pet, occurrences, members, colorIndexFor }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: theme.heroPrimary }]}>
       {photo ? (
-        <Image accessibilityIgnoresInvertColors contentFit="cover" contentPosition="50% 35%" source={photo} style={StyleSheet.absoluteFill} transition={220} />
+        <Image accessibilityIgnoresInvertColors contentFit="cover" contentPosition={{ left: '50%', top: '30%' }} source={photo} style={StyleSheet.absoluteFill} transition={220} />
       ) : (
         <View style={[StyleSheet.absoluteFill, styles.fallback]}>
           <Ionicons color={theme.onHeroPrimaryMuted} name="paw-outline" size={layout.icon.xl * 2} />

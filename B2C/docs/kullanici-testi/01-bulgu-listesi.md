@@ -20,7 +20,7 @@ Ciddiyet 1-5, personaların verdiği ciddiyetlerin en yükseği alındı.
 | 4 | B-07 | Gün dönmüyor: ertesi gün hâlâ dünkü kayıt görünüyor | 5 | 1 bulan, 4 destekleyen | **düzeltildi** (18 Eyl 2026) |
 | 5 | B-10 | Kayıt düzeltme / silme / geri alma yok | 5 | 10/10 | açık |
 | 6 | B-15 | "Demoyu başlangıca döndür" onaysız ve izsiz siliyor | 5 | 4/10 | açık |
-| 7 | B-16 | "Birini davet et" davet edilenin ekranını açıyor | 5 | 10/10 | açık |
+| 7 | B-16 | "Birini davet et" davet edilenin ekranını açıyor | 5 | 10/10 | **düzeltildi** (19 Eyl 2026) |
 | 8 | B-24 | Plan ekleme/düzenleme yok | 5 | 10/10 | açık |
 | 9 | B-28 | Hatırlatıcı 20:00'ye sabit kodlu | 4 | 4/10 | açık |
 | 10 | B-11 | Uygulamada hiç metin girişi yok (not/doz/saat) | 4 | 5/10 | açık |
