@@ -9,6 +9,7 @@ PatiNöbeti'nin arayüzü, sektördeki 28 uygulamayla karşılaştırıldı.
 | `02-ilac-takibi.md` | 9 ilaç takibi/adherence uygulaması + akademik kanıt |
 | `03-ortak-bakim.md` | 10 ortak bakım / bebek günlüğü / hane koordinasyonu uygulaması |
 | `04-sentez-ve-aksiyon.md` | 14 tasarım kararı, kaçınılacaklar, konumlandırma, aksiyon planı |
+| `06-erisilebilirlik-kabul-listesi.md` | **Kapı belgesi (T-6):** kontrast eşikleri, tipografi, renk dışı durum, dokunma hedefi, hareket, dil ve koyu mod kuralları + birleştirme kontrol listesi |
 | `ekranlar/` | Kıyaslama anındaki kendi ekran görüntülerimiz (öncesi kaydı) |
 
 **Özet yargı:** Arayüz işlevsel olarak dürüst ama görsel olarak jenerik — kararların verilmediği
