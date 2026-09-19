@@ -1,11 +1,12 @@
 import { router } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, RefreshControl, StyleSheet, Switch, Text, View } from 'react-native';
-import { DemoBanner } from '@/components/demo-banner';
+import { PetHero } from '@/components/pet-hero';
 import { Screen, ScreenLoading } from '@/components/screen';
-import { TaskRow } from '@/components/task-row';
-import { BodyText, DisplayText, MetaText } from '@/components/typography';
-import { layout, palette, radius, spacing, typography } from '@/design/tokens';
+import { TaskCard } from '@/components/task-card';
+import { BodyText, MetaText } from '@/components/typography';
+import { assignPersonColors, layout, palette, radius, spacing, typography } from '@/design/tokens';
+import { standingEvents } from '@/domain/care';
 import { currentOccurrences, dayKeyInTimeZone } from '@/domain/schedule';
 import { useApp } from '@/state/app-context';
 import { useRuntime } from '@/state/runtime-context';
@@ -21,24 +22,71 @@ export default function TodayScreen() {
       void runtime.gateway.trackEvent('shared_state_viewed', snapshot.householdId).catch(() => { trackedSharedView.current = null; });
     }
   }, [snapshot, runtime.gateway]);
+  const colors = useMemo(() => assignPersonColors(snapshot?.members.map((member) => member.id) ?? []), [snapshot?.members]);
   if (isLoading || !snapshot) return <ScreenLoading />;
+
   const planTimezone = snapshot.plans[0]?.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
   const dateKey = dayKeyInTimeZone(new Date(), planTimezone);
-  const date = `${new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', weekday: 'long', timeZone: 'UTC' }).format(new Date(`${dateKey}T12:00:00.000Z`))} · ${planTimezone}`;
+  const date = new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', weekday: 'long', timeZone: 'UTC' }).format(new Date(`${dateKey}T12:00:00.000Z`));
   const today = currentOccurrences(snapshot);
+  const focus = today.find((occurrence) => standingEvents(occurrence.events).length === 0) ?? null;
+  const rest = today.filter((occurrence) => occurrence.id !== focus?.id);
   const currentMember = snapshot.members.find((member) => member.id === runtime.session?.user.id);
   const canSeeOffer = snapshot.isDemo || (snapshot.members.length >= 2 && currentMember?.role === 'owner');
+  const connection = snapshot.isDemo
+    ? snapshot.isOffline ? 'Çevrimdışı prova · kayıtlar sıraya alınır' : 'Yerel demo · kayıtlar yalnız bu cihazda'
+    : snapshot.isOffline ? 'Yerel görünüm · bağlantıda aynı kimlikle paylaşılır' : 'Ortak hane bağlantısı açık';
   const refresh = async () => { setRefreshing(true); try { await refreshSnapshot(); } finally { setRefreshing(false); } };
+
   return <Screen refreshControl={<RefreshControl colors={[palette.primary]} onRefresh={() => void refresh()} refreshing={refreshing} tintColor={palette.primary} />}>
-    <View style={styles.kicker}><View style={styles.avatar}><Text style={styles.avatarText}>{snapshot.pet.name[0]?.toLocaleUpperCase('tr-TR')}</Text></View><MetaText>{snapshot.pet.name} · ortak bakım kaydı</MetaText></View>
-    <DisplayText>Bugünün nöbeti</DisplayText><BodyText style={styles.date}>{date}</BodyText>{snapshot.isDemo ? <DemoBanner /> : null}
-    <View style={styles.connectivity}><View style={styles.connectivityCopy}><Text style={styles.connectionTitle}>{snapshot.isDemo ? snapshot.isOffline ? 'Çevrimdışı prova' : 'Bu cihaz çevrimiçi' : snapshot.isOffline ? 'Yerel görünüm açık' : 'Ortak hane bağlantısı açık'}</Text><MetaText>{snapshot.isDemo ? snapshot.isOffline ? 'Yeni kayıtlar paylaşılmak üzere sıraya alınır.' : 'Demo kayıtları yalnızca bu cihazda tutulur.' : snapshot.isOffline ? 'Yeni kayıtlar bu cihazda kaydedildi; bağlantıda aynı kimlikle paylaşılır.' : 'Yeni hane kayıtları otomatik gelir; aşağı çekerek de yenileyebilirsin.'}</MetaText></View>{snapshot.isDemo ? <Switch accessibilityLabel={snapshot.isOffline ? 'Çevrimdışı provayı kapat' : 'Çevrimdışı provayı aç'} onValueChange={setOffline} trackColor={{ false: palette.line, true: palette.brass }} value={snapshot.isOffline} /> : null}</View>
-    <View accessibilityLabel="Bugünkü bakım zaman çizelgesi" style={styles.timeline}>{today.length === 0 ? <View style={styles.empty}><Text style={styles.connectionTitle}>Bugün için planlanmış bakım yok</Text><MetaText>Planlar sekmesindeki bakımlar her gün bugüne taşınır.</MetaText></View> : today.map((item) => <TaskRow key={item.id} occurrence={item} onPress={() => router.push(`/record/${item.id}`)} />)}</View>
-    {canSeeOffer ? <Pressable accessibilityRole="button" onPress={() => router.push('/paywall')} style={styles.plusCard}><MetaText style={styles.plusEyebrow}>İkinci bakım veren sonrası</MetaText><Text style={styles.plusTitle}>Hanenin bakım geçmişini birlikte görün</Text><BodyText>Plus önizlemesini incele →</BodyText></Pressable> : null}
+    <PetHero colorIndexFor={(memberId) => colors[memberId] ?? 0} members={snapshot.members} occurrences={today} pet={snapshot.pet} />
+
+    <View style={styles.status}>
+      <View style={styles.statusCopy}>
+        <MetaText numberOfLines={2}>{connection}</MetaText>
+        <MetaText style={styles.date}>{date} · {planTimezone}</MetaText>
+      </View>
+      {snapshot.isDemo ? <Switch accessibilityLabel={snapshot.isOffline ? 'Çevrimdışı provayı kapat' : 'Çevrimdışı provayı aç'} onValueChange={setOffline} trackColor={{ false: palette.line, true: palette.brass }} value={snapshot.isOffline} /> : null}
+    </View>
+
+    {today.length === 0 ? (
+      <View style={styles.empty}>
+        <Text style={styles.emptyTitle}>Bugün için planlanmış bakım yok</Text>
+        <BodyText style={styles.emptyBody}>Planlar sekmesinde kurduğunuz bakımlar her sabah bugüne taşınır.</BodyText>
+      </View>
+    ) : (
+      <View accessibilityLabel="Bugünkü bakım zaman çizelgesi" style={styles.timeline}>
+        {focus ? <TaskCard colorIndexFor={(memberId) => colors[memberId] ?? 0} occurrence={focus} onPress={() => router.push(`/record/${focus.id}`)} variant="now" /> : null}
+        {rest.map((occurrence) => (
+          <TaskCard colorIndexFor={(memberId) => colors[memberId] ?? 0} key={occurrence.id} occurrence={occurrence} onPress={() => router.push(`/record/${occurrence.id}`)} variant="next" />
+        ))}
+      </View>
+    )}
+
+    {canSeeOffer ? (
+      <Pressable accessibilityRole="button" onPress={() => router.push('/paywall')} style={({ pressed }) => [styles.offer, pressed && styles.offerPressed]}>
+        <View style={styles.offerCopy}>
+          <Text style={styles.offerTitle}>Hanenin bakım geçmişini birlikte görün</Text>
+          <MetaText style={styles.offerMeta}>Plus önizlemesi · ikinci bakım veren her zaman ücretsiz</MetaText>
+        </View>
+        <Text style={styles.offerArrow}>→</Text>
+      </Pressable>
+    ) : null}
   </Screen>;
 }
+
 const styles = StyleSheet.create({
-  kicker: { alignItems: 'center', flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.md, marginTop: spacing.lg }, avatar: { alignItems: 'center', backgroundColor: palette.brassSoft, borderRadius: radius.pill, height: layout.avatar.md, justifyContent: 'center', width: layout.avatar.md }, avatarText: { ...typography.bodyStrong, color: palette.brassInk }, date: { color: palette.muted, marginTop: spacing.xs },
-  connectivity: { alignItems: 'center', backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.md, borderWidth: 1, flexDirection: 'row', gap: spacing.md, justifyContent: 'space-between', marginBottom: spacing.xl, padding: spacing.lg }, connectivityCopy: { flex: 1, gap: 2 }, connectionTitle: { ...typography.bodyStrong, color: palette.ink }, timeline: { marginTop: spacing.sm }, empty: { backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.md, borderWidth: 1, gap: spacing.xs, marginBottom: spacing.xl, padding: spacing.lg },
-  plusCard: { backgroundColor: palette.brassSoft, borderRadius: radius.lg, gap: spacing.sm, padding: layout.cardPaddingLoose }, plusEyebrow: { color: palette.brassInk }, plusTitle: { ...typography.title, color: palette.ink },
+  status: { alignItems: 'center', flexDirection: 'row', gap: spacing.md, justifyContent: 'space-between', marginTop: layout.blockGap, minHeight: layout.rowMinHeight },
+  statusCopy: { flex: 1, gap: spacing.xxs },
+  date: { textTransform: 'capitalize' },
+  timeline: { gap: layout.rowGap, marginTop: layout.sectionGap },
+  empty: { backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.lg, borderWidth: 1, gap: spacing.xs, marginTop: layout.sectionGap, padding: layout.cardPaddingLoose },
+  emptyTitle: { ...typography.title, color: palette.ink },
+  emptyBody: { color: palette.muted },
+  offer: { alignItems: 'center', backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.lg, borderWidth: 1, flexDirection: 'row', gap: spacing.md, marginTop: layout.sectionGap, padding: layout.cardPadding },
+  offerPressed: { backgroundColor: palette.sunken },
+  offerCopy: { flex: 1, gap: spacing.xxs },
+  offerTitle: { ...typography.bodyStrong, color: palette.ink },
+  offerMeta: { color: palette.muted },
+  offerArrow: { ...typography.title, color: palette.brass },
 });

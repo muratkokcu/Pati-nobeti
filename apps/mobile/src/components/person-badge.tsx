@@ -58,13 +58,13 @@ export function PersonBadge({ name, memberId, colorIndex, initials, size = 'md',
 }
 
 /** Çakışan kayıtlarda iki avatar yan yana: "ikiniz de ilgilendiniz". */
-export function PersonBadgeStack({ people, size = 'sm', monochrome = false }: { people: { colorIndex?: number; id?: string; initials?: string; name: string }[]; size?: PersonBadgeSize; monochrome?: boolean }) {
+export function PersonBadgeStack({ people, size = 'sm', monochrome = false, ringColor }: { people: { colorIndex?: number; id?: string; initials?: string; name: string }[]; size?: PersonBadgeSize; monochrome?: boolean; ringColor?: string }) {
   const theme = useAppTheme();
   const diameter = scaled(layout.avatar[size]);
   return (
     <View accessibilityLabel={people.map((person) => person.name).join(' ve ')} accessible style={styles.stack}>
       {people.map((person, order) => (
-        <View key={`${person.id ?? person.name}-${order}`} style={[styles.stacked, { borderColor: theme.surface, borderRadius: (diameter + 4) / 2, marginLeft: order === 0 ? 0 : -diameter / 3 }]}>
+        <View key={`${person.id ?? person.name}-${order}`} style={[styles.stacked, { borderColor: ringColor ?? theme.surface, borderRadius: (diameter + 4) / 2, marginLeft: order === 0 ? 0 : -diameter / 3 }]}>
           <PersonBadge colorIndex={person.colorIndex} initials={person.initials} memberId={person.id} monochrome={monochrome} name={person.name} showName={false} size={size} />
         </View>
       ))}

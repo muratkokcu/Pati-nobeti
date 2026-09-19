@@ -64,10 +64,11 @@ export const layout = {
   scrollClearance: 120,
   /** Hero / renk bloğu ve fotoğraf kartı ölçüleri. */
   heroMinHeight: 168,
+  heroPhoto: 112,
   photoRatio: 4 / 3,
   /** Yüzen pill navigasyon: ekran kenarından boşluk ve yükseklik. */
   navInset: spacing.lg,
-  navHeight: 64,
+  navHeight: 78,
 } as const;
 
 /**
@@ -230,6 +231,12 @@ export const palette = {
   uncertainSoft: schemes.light.status.uncertain.bg,
   neutralSoft: schemes.light.status.skipped.bg,
   neutralInk: schemes.light.status.skipped.fg,
+  // Yüzen pill navigasyon ve hero blokları açık şemanın doğrudan karşılıkları.
+  navSurface: schemes.light.navSurface,
+  navBorder: schemes.light.navBorder,
+  heroPrimary: schemes.light.heroPrimary,
+  onHeroPrimary: schemes.light.onHeroPrimary,
+  onHeroPrimaryMuted: schemes.light.onHeroPrimaryMuted,
   statusAccent: mapStatus('accent'),
   statusSoft: mapStatus('bg'),
   statusInk: mapStatus('fg'),

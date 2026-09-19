@@ -1,4 +1,5 @@
 import { buildDayOccurrences, localDayKey, occurrenceIdFor, scheduledAtFor } from '@/domain/schedule';
+import { DEMO_PET_PHOTO } from '@/domain/types';
 import type { AppSnapshot, CareEvent, CarePlan } from '@/domain/types';
 
 export function createDemoSnapshot(now = new Date()): AppSnapshot {
@@ -13,7 +14,7 @@ export function createDemoSnapshot(now = new Date()): AppSnapshot {
   return {
     isDemo: true,
     isOffline: false,
-    pet: { id: 'pet-luna', name: 'Luna', species: 'cat' },
+    pet: { id: 'pet-luna', name: 'Luna', species: 'cat', photoUri: DEMO_PET_PHOTO },
     members: [
       { id: 'member-murat', name: 'Murat', initials: 'MU', role: 'owner', state: 'active' },
       { id: 'member-deniz', name: 'Deniz', initials: 'DE', role: 'caregiver', state: 'active' },

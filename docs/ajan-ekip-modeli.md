@@ -1,5 +1,12 @@
 # PatiNöbeti ajan ekip modeli
 
+> **19 Eylül 2026 tazelemesi.** İlk roster denetçi ağırlıklıydı: on rolün yedisi kural yazıyor,
+> ölçüyor ve veto ediyordu; hiçbirinin görevi "bu uygulama modern görünsün" değildi. Her kapı
+> riski engelliyor, **hiçbiri sıradanlığı engellemiyordu** — sonuç, arayüzü inşa etmek yerine
+> boyayan bir ekip oldu. Roster altı çekirdek + iki çağrılan role indirildi; her rol artık ya
+> **üretir** ya da **üretilen zanaatı denetler**. Yalnız kural yazan rol kalmadı, ve yeni bir
+> yetki eklendi: **sıradanlık vetosu** (`urun-yonu`).
+
 Tarih: 19 Eylül 2026 · Kapsam: tüm proje (B2C öncelikli)
 
 Bu belge, şirketin yürütme ekibi yalnızca ajanlardan oluştuğunda hangi rollerin var olması
@@ -36,16 +43,26 @@ ile tanımlanır. Unvan taklidi (CTO ajanı, PM ajanı) kullanılmaz.
 
 | # | Rol | Sahiplik alanı | Vetosu |
 |---|---|---|---|
-| 1 | **Ürün sözleşmesi bekçisi** | `PRODUCT.md` değişmezleri, kapsam, karar kayıtları | Sözleşmeyi bozan her değişiklik |
-| 2 | **Kayıt bütünlüğü ajanı** | `src/domain/care.ts`, kayıt/çakışma/netleştirme/silme semantiği | `domain/` ve `data/` diff'leri |
-| 3 | **Mobil ürün ajanı** | `apps/mobile` ekranları, offline-first etkileşim | — (yazan taraf) |
-| 4 | **Veri ve senkron ajanı** | Supabase şeması, RLS, outbox, realtime, migration | Şema ve politika değişiklikleri |
-| 5 | **Zaman ve bildirim ajanı** | Gün üretimi, saat dilimi, hatırlatıcı, push | Takvim/saat/bildirim mantığı |
-| 6 | **Persona laboratuvarı ajanı** | 10 kişilik popülasyon, harness, regresyon turu | Bir persona "kullanmam"a dönerse sürüm |
-| 7 | **Erişilebilirlik ve Türkçe ajanı** | Punto, kontrast, ekran okuyucu, terim sözlüğü, hitap | Kullanıcıya görünen yeni metin |
-| 8 | **Mahremiyet ve KVKK ajanı** | Veri envanteri, rol sınırları, export/delete, paylaşım | Dışarı veri çıkaran her özellik |
-| 9 | **Kanıt denetçisi** | Her "tamamlandı" iddiasının bağımsız tekrarı | Kanıtsız kapanış |
-| 10 | **Sürüm kapısı ajanı** | CI, typecheck/lint/test, EAS build, mağaza metası | Kırık boru hattıyla sürüm |
+| 1 | **urun-yonu** | Ürün değişmezleri + görsel yön + kapsam | Değişmezi bozan iş **ve sıradan iş** |
+| 2 | **arayuz-muhendisi** | Ekranlar, bileşenler, hareket, görsel varlıklar | — (üreten taraf) |
+| 3 | **bakim-emniyeti** | Kayıt/çakışma semantiği + gün, saat dilimi, hatırlatıcı | `domain/`, `data/`, takvim ve bildirim mantığı |
+| 4 | **veri-senkron** | Supabase şeması, RLS, outbox, realtime | Şema ve politika değişiklikleri |
+| 5 | **bitirme-denetcisi** | Zanaat + doğruluk + erişilebilirlik + kapılar (yazma yetkisi yok) | Kanıtsız veya şablon iş |
+| 6 | **persona-lab** | 10 kişilik popülasyon, harness, regresyon turu | Kararı kötüleşen persona |
+| ç | **mahremiyet-kvkk** | Veri envanteri, rol sınırı, export/delete, özet sözleşmesi | Dışarı veri çıkaran iş |
+| ç | **deney-olcum** | Aktivasyon hunisi, ürün olayları, fiyat testi | Ölçülemeyen deney |
+
+Kaldırılan/birleştirilen roller: `urun-sozlesmesi` + `marka-tasarim` → `urun-yonu`;
+`kayit-butunlugu` + `zaman-bildirim` → `bakim-emniyeti`; `erisilebilirlik-dil` +
+`kanit-denetcisi` + `surum-kapisi` → `bitirme-denetcisi`; `mobil-urun` → `arayuz-muhendisi`;
+`tartisma-yoneticisi` kaldırıldı (karara bağlanmayan tören).
+
+### Sıradanlık vetosu
+
+`urun-yonu` bir ekranı şu testlerden biri düşerse gönderemez: **yan yana** (rakip ekranla
+karşılaştırıldığında şablon duruyor mu), **görsel taşıyıcı** (ekranda içeriği taşıyan fotoğraf,
+renk alanı veya veri görselleştirmesi var mı), **karar** (görsel bir karar mı, güvenli ortalama
+mı), **anı** (hatırlanacak tek bir an var mı), **isim** (ekran görüntüsünden marka tanınıyor mu).
 
 ### 2.1 Ürün sözleşmesi bekçisi
 - **Korur:** "Kayıt ile gerçeği karıştırma", tıbbi tavsiye yok, ilk sürümde AI yok, hane
