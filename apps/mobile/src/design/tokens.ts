@@ -64,6 +64,8 @@ export const layout = {
   scrollClearance: 148,
   /** Hero / renk bloğu ve fotoğraf kartı ölçüleri. */
   heroMinHeight: 168,
+  /** Tam genişlik hero: fotoğraf ekranın üst üçte birini kaplar. */
+  heroHeight: 320,
   heroPhoto: 112,
   photoRatio: 4 / 3,
   /** Yüzen pill navigasyon: ekran kenarından boşluk ve yükseklik. */

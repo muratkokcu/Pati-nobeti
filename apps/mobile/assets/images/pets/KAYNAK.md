@@ -11,7 +11,8 @@ uygulamaya girmez.
 - **Lisans:** Pexels License — ücretsiz kullanım, ticari kullanım serbest, atıf zorunlu değil.
   (Atıf zorunlu olmasa da bu dosyada kayıt altına alınmıştır.)
 - **İndirme:** 19 Eylül 2026, özgün 1200×1800 JPEG.
-- **İşlem:** `luna.jpg` 4:5 hero kırpımı (960×1200, kalite 82, progressive); kırpma kutusu
-  (300, 380, 1140, 1430) — sağdaki koyu pencere kenarı bilinçli olarak dışarıda bırakıldı.
+- **İşlem:** `luna.jpg` tam genişlik hero kırpımı (1050×920, kalite 84, progressive); kırpma
+  kutusu (150, 330, 1200, 1250). Kedinin başı üst yarıda kalacak şekilde seçildi; ekranda
+  `contentPosition="50% 35%"` ile konumlanır.
 - **Kullanım:** yalnız yerel demo verisinde Luna'nın profil görseli olarak. Gerçek hanelerde
   kullanıcı kendi fotoğrafını yükler; bu dosya production kullanıcı verisine kopyalanmaz.

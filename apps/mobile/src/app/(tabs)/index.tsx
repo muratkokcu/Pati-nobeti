@@ -3,12 +3,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, RefreshControl, StyleSheet, Switch, Text, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { PetHero } from '@/components/pet-hero';
+import { StatTiles } from '@/components/stat-tiles';
 import { WeekTrack } from '@/components/week-track';
 import { Screen, ScreenLoading } from '@/components/screen';
 import { TaskCard } from '@/components/task-card';
 import { BodyText, MetaText } from '@/components/typography';
 import { assignPersonColors, layout, palette, radius, spacing, typography } from '@/design/tokens';
-import { standingEvents } from '@/domain/care';
+import { formatClock, standingEvents } from '@/domain/care';
 import { currentOccurrences, dayKeyInTimeZone } from '@/domain/schedule';
 import { useApp } from '@/state/app-context';
 import { useRuntime } from '@/state/runtime-context';
@@ -41,8 +42,11 @@ export default function TodayScreen() {
   const refresh = async () => { setRefreshing(true); try { await refreshSnapshot(); } finally { setRefreshing(false); } };
 
   return <Screen refreshControl={<RefreshControl colors={[palette.primary]} onRefresh={() => void refresh()} refreshing={refreshing} tintColor={palette.primary} />}>
-    <PetHero colorIndexFor={(memberId) => colors[memberId] ?? 0} members={snapshot.members} occurrences={today} pet={snapshot.pet} />
+    <View style={styles.bleed}>
+      <PetHero colorIndexFor={(memberId) => colors[memberId] ?? 0} members={snapshot.members} occurrences={today} pet={snapshot.pet} />
+    </View>
 
+    <View style={styles.sheet}>
     <View style={styles.status}>
       <View style={styles.statusRow}>
         <MetaText numberOfLines={1} style={styles.statusCopy}>{connection}</MetaText>
@@ -56,7 +60,11 @@ export default function TodayScreen() {
       <MetaText numberOfLines={1} style={styles.date}>{date} · {planTimezone}</MetaText>
     </View>
 
-    <WeekTrack snapshot={snapshot} />
+    <StatTiles tiles={[
+      { icon: 'checkmark-done', value: `${today.filter((occurrence) => standingEvents(occurrence.events).length > 0).length}/${today.length || 0}`, label: 'Bugün kaydedilen' },
+      { icon: 'time-outline', value: focus ? formatClock(focus.scheduledAt) : '—', label: focus ? 'Sıradaki bakım' : 'Bugün tamam' },
+      { icon: 'people-outline', value: `${snapshot.members.length}`, label: 'Bakım veren' },
+    ]} />
 
     {today.length === 0 ? (
       <View style={styles.empty}>
@@ -72,6 +80,8 @@ export default function TodayScreen() {
       </View>
     )}
 
+    <WeekTrack snapshot={snapshot} />
+
     {canSeeOffer ? (
       <Pressable accessibilityRole="button" onPress={() => router.push('/paywall')} style={({ pressed }) => [styles.offer, pressed && styles.offerPressed]}>
         <View style={styles.offerCopy}>
@@ -81,11 +91,14 @@ export default function TodayScreen() {
         <Ionicons color={palette.brass} name="arrow-forward" size={layout.icon.lg} />
       </Pressable>
     ) : null}
+    </View>
   </Screen>;
 }
 
 const styles = StyleSheet.create({
-  status: { gap: spacing.xxs, marginTop: layout.blockGap },
+  bleed: { marginHorizontal: -layout.gutter, marginTop: -layout.gutter },
+  sheet: { backgroundColor: palette.canvas, borderTopLeftRadius: radius.xxl, borderTopRightRadius: radius.xxl, marginHorizontal: -layout.gutter, marginTop: -radius.xxl, paddingHorizontal: layout.gutter, paddingTop: spacing.md },
+  status: { gap: spacing.xxs },
   statusRow: { alignItems: 'center', flexDirection: 'row', gap: spacing.md, justifyContent: 'space-between', minHeight: layout.rowMinHeight },
   statusCopy: { flex: 1 },
   date: { textTransform: 'capitalize' },
