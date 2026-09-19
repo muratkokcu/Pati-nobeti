@@ -83,7 +83,7 @@ export default function PaywallScreen() {
       <Pressable accessibilityRole="button" onPress={() => void registerInterest()} style={({ pressed }) => [styles.primary, pressed && styles.pressed]}>
         <Text style={styles.primaryText}>Bu paket ilgimi çeker</Text>
       </Pressable>
-      <MetaText style={styles.disclosure}>Bu sürümde satın alma kapalı: ödeme alınmaz, abonelik başlatılmaz. Düğme yalnızca fiyat ilgisini ölçer; fiyat ve paket doğrulama sonucuna göre değişebilir.</MetaText>
+      <MetaText>Bu sürümde satın alma kapalı: ödeme alınmaz, abonelik başlatılmaz. Düğme yalnızca fiyat ilgisini ölçer; fiyat ve paket doğrulama sonucuna göre değişebilir.</MetaText>
     </View>
   </Screen>;
 }
@@ -113,5 +113,4 @@ const styles = StyleSheet.create({
   primary: { alignItems: 'center', backgroundColor: palette.primary, borderRadius: radius.md, justifyContent: 'center', minHeight: touchTarget },
   primaryText: { ...typography.bodyStrong, color: palette.white },
   pressed: { backgroundColor: palette.primaryPressed },
-  disclosure: { },
 });

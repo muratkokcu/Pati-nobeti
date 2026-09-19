@@ -102,7 +102,7 @@ export default function NewInviteScreen() {
         </Pressable>
 
         {isDemo ? (
-          <Pressable accessibilityRole="button" onPress={() => router.push(`/invite/${DEMO_TOKEN}`)} style={({ pressed }) => [styles.secondary, pressed && styles.pressed]}>
+          <Pressable accessibilityRole="button" onPress={() => router.push(`/invite/${DEMO_TOKEN}`)} style={({ pressed }) => [styles.secondary, pressed && styles.secondaryPressed]}>
             <Text style={styles.secondaryText}>Karşı tarafın gördüğü ekranı aç</Text>
           </Pressable>
         ) : null}
@@ -145,10 +145,11 @@ const styles = StyleSheet.create({
   primaryText: { ...typography.bodyStrong, color: palette.white },
   secondary: { alignItems: 'center', borderColor: palette.primary, borderRadius: radius.md, borderWidth: 1, justifyContent: 'center', minHeight: touchTarget, paddingHorizontal: spacing.lg },
   secondaryText: { ...typography.bodyStrong, color: palette.primary },
+  secondaryPressed: { backgroundColor: palette.surfacePressed },
   textAction: { justifyContent: 'center', minHeight: touchTarget },
   dangerText: { ...typography.metaStrong, color: palette.overdue },
   disabled: { opacity: opacity.disabled },
-  pressed: { opacity: opacity.disabled },
+  pressed: { backgroundColor: palette.primaryPressed },
   error: { alignItems: 'flex-start', backgroundColor: palette.overdueSoft, borderRadius: radius.md, flexDirection: 'row', gap: spacing.sm, marginTop: layout.blockGap, padding: layout.cardPadding },
   errorText: { color: palette.overdue, flex: 1 },
   footnote: { marginTop: layout.blockGap },

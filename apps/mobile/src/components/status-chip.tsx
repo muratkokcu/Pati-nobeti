@@ -28,7 +28,7 @@ export function StatusChip({ status, label, size = 'md', style }: Props) {
       accessible
       style={[styles.root, { backgroundColor: colors.bg, borderColor: colors.border, paddingHorizontal: small ? spacing.sm - 2 : spacing.sm, paddingVertical: small ? 3 : 5 }, style]}
     >
-      <Ionicons color={colors.fg} name={language.icon} size={small ? 12 : 14} />
+      <Ionicons color={colors.fg} name={language.icon} size={small ? layout.icon.xs : layout.icon.sm} />
       <Text style={[small ? styles.labelSmall : styles.label, { color: colors.fg }]}>{text}</Text>
     </View>
   );
