@@ -27,6 +27,7 @@ planı bulunan evcil hayvanlar için ortak bakım devir uygulaması.
 - [Production omurgası](docs/10-production-omurga.md)
 - [Simüle kullanıcı testi bulguları](docs/08-kullanici-testi-bulgulari.md)
 - [Görsel tasarım kıyaslaması](docs/tasarim-kiyaslama/README.md)
+- [Ekran haritası](docs/13-ekran-haritasi.md)
 - [Karar kaydı](docs/adr/0001-patinobeti-secimi.md)
 - [Stack ve marka kararı](docs/adr/0002-mvp-stack-ve-marka.md)
 
