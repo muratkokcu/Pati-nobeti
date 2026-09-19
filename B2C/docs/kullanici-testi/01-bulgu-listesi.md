@@ -386,3 +386,32 @@ repository düzeltmelerinden sonra). Veriler oturumlar arasında kalıcı.
 ### B-60 · (Olumlu) Deep link çalışıyor
 Barış `/record/occ-morning` adresini doğrudan açtı, kayıt ekranı geldi — teknik altyapı var ama
 kullanıcıya hiç sunulmuyor (kısayol, widget, bildirim aksiyonu yok).
+
+---
+
+## L. Web önizleme (19 Eylül 2026'da bulundu)
+
+Bu iki bulgu kullanıcı testinden değil, web önizlemesinin tarayıcı konsolundan çıktı.
+İkisi de yalnız web hedefini etkiler; native davranış değişmedi.
+
+### B-61 · Web önizlemesi açılışta çöküyordu (boş ekran) · [Ü] · 5 · **düzeltildi**
+**Belirti:** `pageerror: The method or property ExpoNotifications.getLastNotificationResponse is
+not available on web`. Uygulama hiç render edilmiyor, sayfa boş kalıyordu.
+**Sebep:** `src/app/_layout.tsx` içindeki `NotificationNavigator`, `Notifications.useLastNotificationResponse()`
+kancasını platform ayrımı olmadan çağırıyordu; bu API web'de yok.
+**Düzeltme:** Bileşen `src/components/notification-navigator.tsx` (native) ve
+`notification-navigator.web.tsx` (no-op) olarak ayrıldı; `_layout.tsx` platform dosyasını içe aktarıyor.
+**Doğrulama:** Yeniden derlenmiş önizlemede ilk sekme sıfır `pageerror` ile açılıyor.
+
+### B-62 · İkinci sekme boş ekran + yakalanmamış hata veriyordu · [Ü] · 3 · **düzeltildi**
+**Belirti:** `NoModificationAllowedError: ... Access Handles cannot be created if there is another
+open Access Handle or Writable stream associated with the same file.` (Firefox'ta kısaca
+"No modification allowed".)
+**Sebep:** `expo-sqlite`'ın web sürümü OPFS dosya kilidini tek sekmede tutar. İkinci sekme (ya da
+kapanmamış eski bir sekme) veritabanını açamaz. `databaseName` `:memory:` olsa da geçerlidir,
+çünkü wa-sqlite erişim havuzu yine OPFS dosyası açar.
+**Düzeltme:** `src/components/database-gate.tsx` eklendi; `SQLiteProvider`'ın `onError` kancası
+yakalanıp okunur bir ekran gösteriliyor: "PatiNöbeti başka bir sekmede açık — tarayıcı önizlemesi
+aynı anda tek sekmede çalışır." Diğer veritabanı hataları için de genel mesaj var (native dâhil).
+**Kalan sınır:** Bu bir tarayıcı sınırıdır, ürün hatası değildir; web önizlemesi tek sekmeliktir.
+Persona turları da bu yüzden persona başına ayrı tarayıcı profili kullanır.

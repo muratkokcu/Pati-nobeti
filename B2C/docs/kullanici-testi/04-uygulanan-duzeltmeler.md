@@ -87,3 +87,19 @@ Kayıt cümlesindeki ek sabit `’de` idi ("18:59’de"). `clockSuffix()` eki ok
   sekmesi ham dizeyi gösteriyor.
 - **B-32/B-33** (kaçırılan bakım bildirimi, kişi başına ayar) açık — Bugün ekranı artık doğru
   cevabı verdiği için bu bildirimin dayanacağı veri hazır.
+
+---
+
+## Ek: web önizleme düzeltmeleri (19 Eylül 2026)
+
+Kullanıcı testinden değil, önizlemenin tarayıcı konsolundan çıkan iki hata düzeltildi
+(ayrıntı: `01-bulgu-listesi.md` bölüm L).
+
+| Bulgu | Ne yapıldı | Dosya |
+|---|---|---|
+| B-61 · web'de açılışta çökme | Bildirim yanıtı kancası platform dosyalarına ayrıldı | `src/components/notification-navigator.tsx`, `.web.tsx`, `src/app/_layout.tsx` |
+| B-62 · ikinci sekmede boş ekran | `SQLiteProvider.onError` yakalanıp okunur ekran gösteriliyor | `src/components/database-gate.tsx` |
+
+Doğrulama: `npm run typecheck`, `npm run lint` temiz, `npm test` 36/36; yeniden derlenen
+`dist-preview` üzerinde iki sekmeli senaryo harness ile koşuldu — ilk sekme sıfır hatayla açılıyor,
+ikinci sekme "PatiNöbeti başka bir sekmede açık" mesajını gösteriyor.

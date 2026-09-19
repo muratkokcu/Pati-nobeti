@@ -108,6 +108,9 @@ Aşağıdakiler web harness'ının sınırıdır; gerçek cihazda ayrıca test e
 - Dynamic Type / sistem yazı boyutu ölçeklemesi ve ekran okuyucu etiketlerinin gerçek okunuşu.
   Nuray'ın punto/kontrast gözlemleri tarayıcı görüntüsü üzerindendir.
 - Gerçek hesap, davet teslimi, rol sınırlarının sunucu tarafında uygulanması, ödeme akışı.
+- **Web önizlemesi tek sekmeliktir.** `expo-sqlite`'ın web sürümü OPFS dosya kilidini tek sekmede
+  tutar; ikinci sekme veritabanını açamaz (B-62). Persona turları bu yüzden persona başına ayrı
+  tarayıcı profili kullanır; aynı profilde iki sekme açma.
 
 ## 7. Klasör düzeni
 
