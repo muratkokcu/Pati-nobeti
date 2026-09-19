@@ -5,6 +5,10 @@ Bu çalışma alanında B2B ve B2C ürün araştırmaları birbirinden ayrılmı
 - [B2C — PatiNöbeti / PetShift](B2C/README.md)
 - [B2B — SahaKanıt / FieldProof](B2B/README.md)
 
+Yürütme ekibi yalnızca ajanlardan oluşur; roller, veto sınırları ve iş akışı
+[ajan ekip modelinde](docs/ajan-ekip-modeli.md) tanımlıdır, rol dosyaları `.claude/agents/`
+altındadır.
+
 Aktif öncelik **B2C PatiNöbeti** fikrinin 30 günlük problem, aktivasyon ve ödeme
 doğrulamasıdır. Her iki fikir de başarı/öldürme kriterleri geçilmeden geniş ürün
 geliştirmeye alınmaz.
