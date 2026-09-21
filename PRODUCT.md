@@ -55,8 +55,13 @@ Veteriner görüşmesinde son 30 günlük özet paylaşılabilir.
 
 Çalışma adı Türkiye'de **PatiNöbeti**, globalde **PetShift**. Marka oyuncakçı,
 veteriner hastanesi veya jenerik pembe/mavi pet uygulaması gibi görünmemeli.
-Sakin, güvenilir ve gündelik olmalı; sağlık garantisi veya korku pazarlaması
-yapmamalı.
+Güvenilir ve gündelik olmalı; sağlık garantisi veya korku pazarlaması yapmamalı.
+
+**Görsel dünya (21 Eylül 2026 kararı):** canlı ve kabarcık hissi. Zemin açık ve
+ferah, kâğıt/bej değil; renk cömertçe kullanılır (nane yeşili eylem rengi, kişi
+renkleri doygun), her yüzey yuvarlaktır, birincil eylemler kapsül biçimlidir.
+Hayvanın fotoğrafı arayüzün taşıyıcısıdır. Tek grotesk: Archivo. Karanlık tema
+varsayılan değildir. Canlılık, sağlık iddiası veya çocuksuluk anlamına gelmez.
 
 ## Evidence on Hand
 

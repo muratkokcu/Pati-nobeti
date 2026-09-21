@@ -1,12 +1,17 @@
+import { Archivo_400Regular, Archivo_500Medium, Archivo_600SemiBold, Archivo_700Bold, useFonts } from '@expo-google-fonts/archivo';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { DatabaseGate } from '@/components/database-gate';
+import { ScreenLoading } from '@/components/screen';
 import { NotificationNavigator } from '@/components/notification-navigator';
 import { AppProvider } from '@/state/app-context';
 import { RuntimeProvider } from '@/state/runtime-context';
 import { palette } from '@/design/tokens';
 
 export default function RootLayout() {
+  // Tek grotesk: Archivo. Yüklenene kadar ekran çizilmez ki tipografi zıplamasın.
+  const [fontsLoaded] = useFonts({ Archivo_400Regular, Archivo_500Medium, Archivo_600SemiBold, Archivo_700Bold });
+  if (!fontsLoaded) return <ScreenLoading />;
   return (
     <DatabaseGate>
       <RuntimeProvider><AppProvider>

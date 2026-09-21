@@ -14,7 +14,12 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = __dirname.replace(/\/harness$/, '');
-const EXEC = process.env.CHROMIUM_PATH || `${process.env.HOME}/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome`;
+const EXEC = process.env.CHROMIUM_PATH || (() => {
+  // Playwright sürümü güncellendiğinde klasör adı değişir; sabit sürüm yazmak harness'ı kırıyordu.
+  const root = `${process.env.HOME}/.cache/ms-playwright`;
+  const dir = fs.existsSync(root) ? fs.readdirSync(root).filter((name) => name.startsWith('chromium-')).sort().pop() : null;
+  return dir ? `${root}/${dir}/chrome-linux64/chrome` : '';
+})();
 const BASE = process.env.APP_URL || 'http://localhost:4321';
 
 async function withApp(persona, fn, opts = {}) {

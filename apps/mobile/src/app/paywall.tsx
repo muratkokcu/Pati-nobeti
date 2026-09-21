@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   priceRow: { alignItems: 'baseline', flexDirection: 'row', gap: spacing.sm },
   amount: { ...typography.display, color: palette.ink },
   period: { flexShrink: 1 },
-  primary: { alignItems: 'center', backgroundColor: palette.primary, borderRadius: radius.md, justifyContent: 'center', minHeight: touchTarget },
+  primary: { alignItems: 'center', backgroundColor: palette.primary, borderRadius: radius.pill, justifyContent: 'center', minHeight: touchTarget },
   primaryText: { ...typography.bodyStrong, color: palette.white },
   pressed: { backgroundColor: palette.primaryPressed },
 });

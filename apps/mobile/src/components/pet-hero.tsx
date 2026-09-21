@@ -51,20 +51,20 @@ export function PetHero({ pet, occurrences, members, colorIndexFor }: Props) {
       )}
 
       <View style={styles.bottom}>
-        <View style={[styles.panel, { backgroundColor: theme.photoPanel }]}>
+        <View style={[styles.panel, { backgroundColor: theme.surface }]}>
           <View style={styles.panelHead}>
-            <DisplayText numberOfLines={1} style={[styles.name, { color: theme.onPhotoPanel }]}>{pet.name}</DisplayText>
+            <DisplayText numberOfLines={1} style={[styles.name, { color: theme.ink }]}>{pet.name}</DisplayText>
             {total > 0 ? <DayTrack occurrences={occurrences} /> : null}
           </View>
-          <BodyStrongText numberOfLines={2} style={{ color: theme.onPhotoPanelMuted }}>{summary}</BodyStrongText>
+          <BodyStrongText numberOfLines={2} style={{ color: theme.muted }}>{summary}</BodyStrongText>
           {members.length > 0 ? (
             <View style={styles.people}>
               <PersonBadgeStack
                 people={members.map((member) => ({ colorIndex: colorIndexFor(member.id), id: member.id, initials: member.initials, name: member.name }))}
-                ringColor={theme.photoPanel}
+                ringColor={theme.surface}
                 size="sm"
               />
-              <MetaText numberOfLines={2} style={[styles.peopleNames, { color: theme.onPhotoPanelMuted }]}>
+              <MetaText numberOfLines={2} style={[styles.peopleNames, { color: theme.muted }]}>
                 {members.length === 1 ? 'bakımı yalnız siz kaydediyorsunuz' : members.map((member) => member.name).join(' ve ')}
               </MetaText>
             </View>
@@ -82,17 +82,17 @@ function DayTrack({ occurrences }: { occurrences: TaskOccurrence[] }) {
     <View aria-hidden pointerEvents="none" style={styles.track}>
       {occurrences.map((occurrence) => {
         const filled = standingEvents(occurrence.events).length > 0;
-        return <View key={occurrence.id} style={[styles.segment, { backgroundColor: filled ? theme.onPhotoPanel : 'transparent', borderColor: theme.onPhotoPanelMuted }]} />;
+        return <View key={occurrence.id} style={[styles.segment, { backgroundColor: filled ? theme.status.done.accent : 'transparent', borderColor: theme.line }]} />;
       })}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { height: layout.heroHeight, justifyContent: 'flex-end', overflow: 'hidden' },
+  root: { borderBottomLeftRadius: radius.xxl, borderBottomRightRadius: radius.xxl, height: layout.heroHeight, justifyContent: 'flex-end', overflow: 'hidden' },
   fallback: { alignItems: 'center', gap: spacing.sm, justifyContent: 'center' },
   bottom: { paddingBottom: spacing.xxl + spacing.md, paddingHorizontal: spacing.md },
-  panel: { borderRadius: radius.xl, gap: spacing.xs, padding: layout.cardPadding },
+  panel: { borderRadius: radius.xl, gap: spacing.xs, padding: layout.cardPaddingLoose },
   panelHead: { alignItems: 'center', flexDirection: 'row', gap: spacing.md, justifyContent: 'space-between' },
   name: { flexShrink: 1 },
   track: { flexDirection: 'row', gap: spacing.xs, width: 72 },

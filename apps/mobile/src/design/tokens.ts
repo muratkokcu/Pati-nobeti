@@ -16,23 +16,32 @@ import { PixelRatio, Platform, type TextStyle } from 'react-native';
 // K-13: hiyerarşi ölçek ve boşlukla kurulur. Gövde 400, başlık 600; hiçbir rol 700 değil.
 // K-16: gövde/meta satır yüksekliği ≥ 1,40×, başlık ≥ 1,20×.
 // K-15: 20 dp altında negatif harf aralığı yok.
+/** Tek grotesk: Archivo. Ağırlıklar aileden gelir; RN'de fontWeight yerine aile adı kullanılır. */
+export const fontFamily = {
+  regular: 'Archivo_400Regular',
+  medium: 'Archivo_500Medium',
+  semibold: 'Archivo_600SemiBold',
+  bold: 'Archivo_700Bold',
+} as const;
+
 export const typography = {
-  display: { fontSize: 26, fontWeight: '600', letterSpacing: -0.4, lineHeight: 32 },
-  title: { fontSize: 19, fontWeight: '600', lineHeight: 25 },
-  body: { fontSize: 16, fontWeight: '400', lineHeight: 23 },
-  bodyStrong: { fontSize: 16, fontWeight: '600', lineHeight: 23 },
-  meta: { fontSize: 13, fontWeight: '400', lineHeight: 19 },
-  metaStrong: { fontSize: 13, fontWeight: '600', lineHeight: 19 },
-  label: { fontSize: 12, fontWeight: '600', letterSpacing: 0.1, lineHeight: 17 },
+  display: { fontFamily: fontFamily.bold, fontSize: 30, fontWeight: '700', letterSpacing: -0.8, lineHeight: 34 },
+  title: { fontFamily: fontFamily.semibold, fontSize: 19, fontWeight: '600', lineHeight: 25 },
+  body: { fontFamily: fontFamily.regular, fontSize: 16, fontWeight: '400', lineHeight: 23 },
+  bodyStrong: { fontFamily: fontFamily.semibold, fontSize: 16, fontWeight: '600', lineHeight: 23 },
+  meta: { fontFamily: fontFamily.regular, fontSize: 13, fontWeight: '400', lineHeight: 19 },
+  metaStrong: { fontFamily: fontFamily.medium, fontSize: 13, fontWeight: '600', lineHeight: 19 },
+  label: { fontFamily: fontFamily.semibold, fontSize: 12, fontWeight: '600', letterSpacing: 0.1, lineHeight: 17 },
   // K-21: saat, tarih ve sayı sütunları tabular — alt alta karşılaştırılıyorlar.
-  clock: { fontSize: 14, fontVariant: ['tabular-nums'], fontWeight: '600', letterSpacing: 0.2, lineHeight: 20 },
-  clockLead: { fontSize: 20, fontVariant: ['tabular-nums'], fontWeight: '600', letterSpacing: -0.2, lineHeight: 24 },
+  clock: { fontFamily: fontFamily.medium, fontSize: 14, fontVariant: ['tabular-nums'], fontWeight: '600', letterSpacing: 0.2, lineHeight: 20 },
+  clockLead: { fontFamily: fontFamily.semibold, fontSize: 22, fontVariant: ['tabular-nums'], fontWeight: '600', letterSpacing: -0.2, lineHeight: 24 },
 } as const satisfies Record<string, TextStyle>;
 
 // ------------------------------------------------------------ ritim ve ölçü
 export const spacing = { xxs: 2, xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32 } as const;
 // xl/xxl yalnızca hero, renk bloğu ve fotoğraf kartları içindir; normal kartlar lg kalır.
-export const radius = { sm: 8, md: 12, lg: 16, xl: 24, xxl: 28, pill: 999 } as const;
+/** Kabarcık dili: her yüzey yuvarlak, hiçbir köşe sert değil. */
+export const radius = { sm: 12, md: 18, lg: 24, xl: 30, xxl: 36, pill: 999 } as const;
 export const touchTarget = Platform.OS === 'ios' ? 44 : 48;
 
 /** Yoğunluk ritmi: ekrana daha çok bilgi sığsın diye kart dolgusu ve satır aralığı kısaldı. */
@@ -61,7 +70,7 @@ export const layout = {
   /** K-17: gövde metni 70 karakteri geçmesin. */
   measure: 560,
   maxContentWidth: 680,
-  scrollClearance: 148,
+  scrollClearance: 172,
   /** Hero / renk bloğu ve fotoğraf kartı ölçüleri. */
   heroMinHeight: 168,
   /** Tam genişlik hero: fotoğraf ekranın üst üçte birini kaplar. */
@@ -88,6 +97,14 @@ export const shadow = {
  * K-35 gereği basılı durum için opaklık yoktur; `primaryPressed` / `surfacePressed` kullanılır.
  */
 export const opacity = { disabled: 0.65 } as const;
+
+/** Tek hareket dili: sönümlü, fiziksel, asla sert. Azaltılmış harekette süre 0 kabul edilir. */
+export const motion = {
+  easing: [0.16, 1, 0.3, 1] as const,
+  fast: 200,
+  base: 320,
+  slow: 460,
+} as const;
 
 /**
  * K-19 gereği `allowFontScaling={false}` yasak. Sabit boyutlu daireler (avatar, düğüm)
@@ -156,25 +173,25 @@ const personSet = (fills: readonly string[], onFill: string): readonly PersonCol
 
 export const schemes: Record<'light' | 'dark', Scheme> = {
   light: {
-    canvas: '#F1EDE2', surface: '#FBF8EF', surfacePressed: '#E8E3D6', raised: '#FFFDF8', sunken: '#E9E4D7',
-    ink: '#1F2723', muted: '#505C56', line: '#888271', lineStrong: '#746D5A', white: '#FFFFFF',
-    primary: '#205241', primaryPressed: '#194133', primaryBorder: '#205241',
-    onPrimary: '#FFFFFF', primarySoft: '#CFE1D6', onPrimarySoft: '#174E3B', accent: '#205241',
-    heroPrimary: '#1B4A39', onHeroPrimary: '#FFFFFF', onHeroPrimaryMuted: '#BFDDCB',
-    heroBrass: '#E9B44C', onHeroBrass: '#462800', onHeroBrassMuted: '#573900',
-    photoPanel: '#252A20', onPhotoPanel: '#F3F1E9', onPhotoPanelMuted: '#CFD6CC',
-    scrim: 'rgba(18, 21, 17, 0.58)',
-    navSurface: '#FFFDF8', navBorder: '#888271',
+    canvas: '#F4F9F6', surface: '#FFFFFF', surfacePressed: '#DEEDE5', raised: '#FFFFFF', sunken: '#DCEDE4',
+    ink: '#0E1A14', muted: '#4A5A52', line: '#6A8878', lineStrong: '#5F7D6F', white: '#FFFFFF',
+    primary: '#12D68B', primaryPressed: '#0FC07C', primaryBorder: '#065C3A',
+    onPrimary: '#052117', primarySoft: '#CFF7E6', onPrimarySoft: '#05553A', accent: '#054F32',
+    heroPrimary: '#12D68B', onHeroPrimary: '#052117', onHeroPrimaryMuted: '#08422E',
+    heroBrass: '#FFC53D', onHeroBrass: '#3A2500', onHeroBrassMuted: '#5A3B00',
+    photoPanel: '#0E1A14', onPhotoPanel: '#F2FBF6', onPhotoPanelMuted: '#BDDCCC',
+    scrim: 'rgba(10, 20, 15, 0.55)',
+    navSurface: '#FFFFFF', navBorder: '#6A8878',
     status: {
-      upcoming: { fg: '#3C4842', bg: '#E1DED2', border: '#868273', accent: '#6D7973' },
-      due: { fg: '#174E3B', bg: '#CFE1D6', border: '#6A8979', accent: '#2E6B54' },
-      overdue: { fg: '#643F00', bg: '#F2DFB6', border: '#987F46', accent: '#B5741E' },
-      done: { fg: '#174E3B', bg: '#CFE1D6', border: '#6A8979', accent: '#2E6B54' },
-      skipped: { fg: '#3C4842', bg: '#E1DED2', border: '#868273', accent: '#6D7973' },
-      uncertain: { fg: '#3C4470', bg: '#DCDFEE', border: '#7C819A', accent: '#5B6394' },
-      conflict: { fg: '#7F271A', bg: '#F2D9D1', border: '#9F7A6E', accent: '#A43C2E' },
+      upcoming: { fg: '#334138', bg: '#E7EFEA', border: '#6C877A', accent: '#5F7D6F' },
+      due: { fg: '#05553A', bg: '#CFF7E6', border: '#2A8C69', accent: '#0A8055' },
+      overdue: { fg: '#6B3B00', bg: '#FFEBC4', border: '#96691A', accent: '#8A6100' },
+      done: { fg: '#05553A', bg: '#CFF7E6', border: '#2A8C69', accent: '#0A8055' },
+      skipped: { fg: '#334138', bg: '#E7EFEA', border: '#6C877A', accent: '#5F7D6F' },
+      uncertain: { fg: '#2F2B8C', bg: '#E5E3FF', border: '#7873D6', accent: '#6660E4' },
+      conflict: { fg: '#8A2115', bg: '#FFE0DA', border: '#A8503E', accent: '#B33A26' },
     },
-    person: personSet(['#85491B', '#1B5A93', '#625462', '#475E49', '#764878', '#2F6338', '#695357', '#953C38'], '#FFFFFF'),
+    person: personSet(['#C2410C', '#0369A1', '#7E22CE', '#15803D', '#BE185D', '#0E7490', '#A16207', '#4338CA'], '#FFFFFF'),
   },
   dark: {
     canvas: '#141715', surface: '#1C201D', surfacePressed: '#2A2F2B', raised: '#272C28', sunken: '#0B0D0C',

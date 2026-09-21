@@ -103,9 +103,9 @@ const styles = StyleSheet.create({
   nowEvents: { gap: spacing.xs, marginTop: spacing.xxs },
   conflict: { ...typography.metaStrong, marginTop: spacing.xxs },
   note: { ...typography.meta },
-  action: { alignItems: 'center', borderRadius: radius.md, flexDirection: 'row', gap: spacing.sm, justifyContent: 'center', marginTop: spacing.sm, minHeight: layout.rowMinHeight, paddingHorizontal: spacing.lg },
+  action: { alignItems: 'center', borderRadius: radius.pill, flexDirection: 'row', gap: spacing.sm, justifyContent: 'center', marginTop: spacing.sm, minHeight: layout.rowMinHeight, paddingHorizontal: spacing.lg },
   actionText: { ...typography.bodyStrong },
-  nextRow: { alignItems: 'center', borderRadius: radius.md, borderWidth: layout.hairline, flexDirection: 'row', gap: spacing.md, minHeight: layout.rowMinHeight, paddingHorizontal: layout.cardPaddingTight, paddingVertical: spacing.sm },
+  nextRow: { alignItems: 'center', borderRadius: radius.pill, borderWidth: layout.hairline, flexDirection: 'row', gap: spacing.md, minHeight: layout.rowMinHeight, paddingHorizontal: layout.cardPaddingTight, paddingVertical: spacing.sm },
   nextTime: { minWidth: 42 },
   nextCopy: { flex: 1, gap: spacing.xxs },
 });

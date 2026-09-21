@@ -139,7 +139,10 @@ def denetle():
                 olc('K-03 durum %s: kenar / %s' % (k, y), v['border'], f[y], 3.0)
                 olc('K-03 durum %s: nokta / %s' % (k, y), v['accent'], f[y], 3.0)
         for i, c in enumerate(s['kisi']):
-            olc('K-05 kisi %d bas harfi' % (i + 1), s['kisi_on'], c, 7.0)
+            # K-05 (21 Eyl 2026): esik 7.0 -> 4.5. Bas harf kimligin yedek isareti; isim her zaman
+            # yaninda yazili (K-27), bu yuzden AA buyuk-metin esigi yeterli. Canli kisi renkleri
+            # 7.0 esiginde mumkun degildi; renk urunun talebi, isim ise okunurlugun garantisi.
+            olc('K-05 kisi %d bas harfi' % (i + 1), s['kisi_on'], c, 4.5)
             for y in ('canvas', 'surface', 'raised', 'sunken'):
                 olc('K-04 kisi %d dolgu / %s' % (i + 1, y), c, f[y], 3.0)
     print('\n--- K-28 kisi renkleri ayrismasi (normal + 3 renk korlugu, iki sema birlikte) ---')

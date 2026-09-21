@@ -90,7 +90,7 @@ export default function TodayScreen() {
 
 const styles = StyleSheet.create({
   bleed: { marginHorizontal: -layout.gutter, marginTop: -layout.gutter },
-  sheet: { backgroundColor: palette.canvas, borderTopLeftRadius: radius.xxl, borderTopRightRadius: radius.xxl, marginHorizontal: -layout.gutter, marginTop: -radius.xxl, paddingHorizontal: layout.gutter, paddingTop: spacing.md },
+  sheet: { backgroundColor: palette.canvas, borderTopLeftRadius: radius.xxl, borderTopRightRadius: radius.xxl, marginHorizontal: -layout.gutter, marginTop: spacing.xs, paddingHorizontal: layout.gutter, paddingTop: spacing.md },
   status: { gap: spacing.xxs },
   statusRow: { alignItems: 'center', flexDirection: 'row', gap: spacing.md, justifyContent: 'space-between', minHeight: layout.rowMinHeight },
   statusCopy: { flex: 1 },
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   empty: { backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.lg, borderWidth: 1, gap: spacing.xs, marginTop: layout.sectionGap, padding: layout.cardPaddingLoose },
   emptyTitle: { ...typography.title, color: palette.ink },
   emptyBody: { color: palette.muted },
-  offer: { alignItems: 'center', backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.lg, borderWidth: 1, flexDirection: 'row', gap: spacing.md, marginTop: layout.sectionGap, padding: layout.cardPadding },
+  offer: { alignItems: 'center', backgroundColor: palette.surface, borderColor: palette.line, borderRadius: radius.xl, borderWidth: 1, flexDirection: 'row', gap: spacing.md, marginTop: layout.sectionGap, padding: layout.cardPadding },
   offerPressed: { backgroundColor: palette.sunken },
   offerCopy: { flex: 1, gap: spacing.xxs },
   offerTitle: { ...typography.bodyStrong, color: palette.ink },
