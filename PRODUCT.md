@@ -57,11 +57,15 @@ Veteriner görüşmesinde son 30 günlük özet paylaşılabilir.
 veteriner hastanesi veya jenerik pembe/mavi pet uygulaması gibi görünmemeli.
 Güvenilir ve gündelik olmalı; sağlık garantisi veya korku pazarlaması yapmamalı.
 
-**Görsel dünya (21 Eylül 2026 kararı):** canlı ve kabarcık hissi. Zemin açık ve
-ferah, kâğıt/bej değil; renk cömertçe kullanılır (nane yeşili eylem rengi, kişi
-renkleri doygun), her yüzey yuvarlaktır, birincil eylemler kapsül biçimlidir.
-Hayvanın fotoğrafı arayüzün taşıyıcısıdır. Tek grotesk: Archivo. Karanlık tema
-varsayılan değildir. Canlılık, sağlık iddiası veya çocuksuluk anlamına gelmez.
+**Görsel dünya (21 Eylül 2026 kararı):** canlı ve kabarcık hissi, tek marka rengiyle
+disiplinli. Marka rengi **tanjerin** (`#CE4A0A`) — yalnız eylem ve marka anlarında
+kullanılır, hiçbir zaman durum anlamına gelmez. İkincil marka rengi **derin çam**
+(`#0F3B34`). Zemin sıcak porselen, yüzeyler beyaz kabarcık, her köşe yuvarlak.
+Durum ailesi ayrıdır ve markadan türemez: yapıldı çam yeşili, gecikti kehribar,
+emin değilim menekşe, çakışma kızıl, nötr sıcak gri. Kişi renkleri beş renklik
+tasarlanmış settir ve yalnız kimlik işaretlerinde kullanılır. Tek yazı ailesi
+**Nunito** (yuvarlak uçlu, sıcak, küçük puntoda okunaklı). Hayvanın fotoğrafı
+arayüzün taşıyıcısıdır. Karanlık tema varsayılan değildir.
 
 ## Evidence on Hand
 

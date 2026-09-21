@@ -1,4 +1,4 @@
-import { Archivo_400Regular, Archivo_500Medium, Archivo_600SemiBold, Archivo_700Bold, useFonts } from '@expo-google-fonts/archivo';
+import { Nunito_400Regular, Nunito_600SemiBold, Nunito_700Bold, Nunito_800ExtraBold, useFonts } from '@expo-google-fonts/nunito';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { DatabaseGate } from '@/components/database-gate';
@@ -10,7 +10,7 @@ import { palette } from '@/design/tokens';
 
 export default function RootLayout() {
   // Tek grotesk: Archivo. Yüklenene kadar ekran çizilmez ki tipografi zıplamasın.
-  const [fontsLoaded] = useFonts({ Archivo_400Regular, Archivo_500Medium, Archivo_600SemiBold, Archivo_700Bold });
+  const [fontsLoaded] = useFonts({ Nunito_400Regular, Nunito_600SemiBold, Nunito_700Bold, Nunito_800ExtraBold });
   if (!fontsLoaded) return <ScreenLoading />;
   return (
     <DatabaseGate>

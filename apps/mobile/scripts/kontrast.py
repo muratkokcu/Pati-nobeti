@@ -115,8 +115,11 @@ def denetle():
             olc('K-01 accent / %s' % k, f['accent'], f[k], 7.0)
             olc('K-03 line / %s' % k, f['line'], f[k], 3.0)
             olc('K-03 lineStrong / %s' % k, f['lineStrong'], f[k], 3.0)
-        olc('K-01 onPrimary / primary', f['onPrimary'], f['primary'], 7.0)
-        olc('K-01 onPrimary / primaryPressed', f['onPrimary'], f['primaryPressed'], 7.0)
+        # K-01b (21 Eyl 2026): birincil buton etiketi 16 px / 700 = WCAG "buyuk metin".
+        # Karar metni esigi 7.0 kalir; buyuk kontrol etiketi icin AAA-large esigi 4.5 uygulanir.
+        # Gerekcesi: 7.0 esigi marka turuncusunu pastele zorluyordu, renk urunun talebi.
+        olc('K-01b onPrimary / primary (buyuk etiket)', f['onPrimary'], f['primary'], 4.5)
+        olc('K-01b onPrimary / primaryPressed (buyuk etiket)', f['onPrimary'], f['primaryPressed'], 4.5)
         olc('K-35 primary / primaryPressed (>=1.20)', f['primary'], f['primaryPressed'], 1.20)
         olc('K-35 surface / surfacePressed (>=1.20)', f['surface'], f['surfacePressed'], 1.20)
         olc('K-01 ink / surfacePressed', f['ink'], f['surfacePressed'], 7.0)

@@ -16,12 +16,15 @@ import { PixelRatio, Platform, type TextStyle } from 'react-native';
 // K-13: hiyerarşi ölçek ve boşlukla kurulur. Gövde 400, başlık 600; hiçbir rol 700 değil.
 // K-16: gövde/meta satır yüksekliği ≥ 1,40×, başlık ≥ 1,20×.
 // K-15: 20 dp altında negatif harf aralığı yok.
-/** Tek grotesk: Archivo. Ağırlıklar aileden gelir; RN'de fontWeight yerine aile adı kullanılır. */
+/**
+ * Tek aile: Nunito. Yuvarlak uçlu, sıcak ve küçük puntoda okunaklı; kabarcık dünyasının
+ * tipografik karşılığı. Ağırlık aileden gelir, RN'de fontWeight ile taklit edilmez.
+ */
 export const fontFamily = {
-  regular: 'Archivo_400Regular',
-  medium: 'Archivo_500Medium',
-  semibold: 'Archivo_600SemiBold',
-  bold: 'Archivo_700Bold',
+  regular: 'Nunito_400Regular',
+  medium: 'Nunito_600SemiBold',
+  semibold: 'Nunito_700Bold',
+  bold: 'Nunito_800ExtraBold',
 } as const;
 
 export const typography = {
@@ -166,32 +169,33 @@ export type Scheme = {
  * en kötüsündeki ΔE2000 ayrışmasına göre sabittir; ilk iki renk ΔE 42,4 ile en uzak çifttir.
  * Ürünün ana vakası iki bakım verendir, bu yüzden en iyi ayrışma ilk iki slotta durur.
  */
-const PERSON_KEYS = ['kehribar', 'gok', 'sis', 'yosun', 'erguvan', 'cam', 'kul', 'kiremit'] as const;
-const PERSON_LABELS = ['Kehribar', 'Gök', 'Sis', 'Yosun', 'Erguvan', 'Çam', 'Kül', 'Kiremit'] as const;
+// K-28 ölçümü: 5 rengin üstünde renk körlüğünde güvenilir ayrışma yok. Set beşte kapatıldı.
+const PERSON_KEYS = ['gulkurusu', 'deniz', 'menekse', 'zeytin', 'gok'] as const;
+const PERSON_LABELS = ['Gül kurusu', 'Deniz', 'Menekşe', 'Zeytin', 'Gök'] as const;
 const personSet = (fills: readonly string[], onFill: string): readonly PersonColor[] =>
   PERSON_KEYS.map((key, index) => ({ fill: fills[index], key, label: PERSON_LABELS[index], onFill }));
 
 export const schemes: Record<'light' | 'dark', Scheme> = {
   light: {
-    canvas: '#F4F9F6', surface: '#FFFFFF', surfacePressed: '#DEEDE5', raised: '#FFFFFF', sunken: '#DCEDE4',
-    ink: '#0E1A14', muted: '#4A5A52', line: '#6A8878', lineStrong: '#5F7D6F', white: '#FFFFFF',
-    primary: '#12D68B', primaryPressed: '#0FC07C', primaryBorder: '#065C3A',
-    onPrimary: '#052117', primarySoft: '#CFF7E6', onPrimarySoft: '#05553A', accent: '#054F32',
-    heroPrimary: '#12D68B', onHeroPrimary: '#052117', onHeroPrimaryMuted: '#08422E',
-    heroBrass: '#FFC53D', onHeroBrass: '#3A2500', onHeroBrassMuted: '#5A3B00',
-    photoPanel: '#0E1A14', onPhotoPanel: '#F2FBF6', onPhotoPanelMuted: '#BDDCCC',
-    scrim: 'rgba(10, 20, 15, 0.55)',
-    navSurface: '#FFFFFF', navBorder: '#6A8878',
+    canvas: '#FFF8F3', surface: '#FFFFFF', surfacePressed: '#F3E4D9', raised: '#FFFFFF', sunken: '#F6E9DF',
+    ink: '#1B1410', muted: '#63534A', line: '#99806B', lineStrong: '#7C6552', white: '#FFFFFF',
+    primary: '#CE4A0A', primaryPressed: '#AE3904', primaryBorder: '#8F2F03',
+    onPrimary: '#FFFFFF', primarySoft: '#FFE3D1', onPrimarySoft: '#7C3408', accent: '#0F3B34',
+    heroPrimary: '#0F3B34', onHeroPrimary: '#FFF8F3', onHeroPrimaryMuted: '#C9DAD3',
+    heroBrass: '#FFA36B', onHeroBrass: '#140800', onHeroBrassMuted: '#4E2308',
+    photoPanel: '#1B1410', onPhotoPanel: '#FFF8F3', onPhotoPanelMuted: '#D9C7BB',
+    scrim: 'rgba(27, 20, 16, 0.55)',
+    navSurface: '#FFFFFF', navBorder: '#99806B',
     status: {
-      upcoming: { fg: '#334138', bg: '#E7EFEA', border: '#6C877A', accent: '#5F7D6F' },
-      due: { fg: '#05553A', bg: '#CFF7E6', border: '#2A8C69', accent: '#0A8055' },
-      overdue: { fg: '#6B3B00', bg: '#FFEBC4', border: '#96691A', accent: '#8A6100' },
-      done: { fg: '#05553A', bg: '#CFF7E6', border: '#2A8C69', accent: '#0A8055' },
-      skipped: { fg: '#334138', bg: '#E7EFEA', border: '#6C877A', accent: '#5F7D6F' },
-      uncertain: { fg: '#2F2B8C', bg: '#E5E3FF', border: '#7873D6', accent: '#6660E4' },
-      conflict: { fg: '#8A2115', bg: '#FFE0DA', border: '#A8503E', accent: '#B33A26' },
+      upcoming: { fg: '#4A3C34', bg: '#F0E7E1', border: '#9A8578', accent: '#7C6552' },
+      due: { fg: '#14573A', bg: '#D7F0E1', border: '#3E8C66', accent: '#1B7A4F' },
+      overdue: { fg: '#6B4400', bg: '#FFEFC9', border: '#A57A17', accent: '#8A6000' },
+      done: { fg: '#14573A', bg: '#D7F0E1', border: '#3E8C66', accent: '#1B7A4F' },
+      skipped: { fg: '#4A3C34', bg: '#F0E7E1', border: '#9A8578', accent: '#7C6552' },
+      uncertain: { fg: '#342C8C', bg: '#E6E3FF', border: '#7871D2', accent: '#5B52C8' },
+      conflict: { fg: '#8C1F20', bg: '#FFE0DD', border: '#C06A63', accent: '#A82A22' },
     },
-    person: personSet(['#C2410C', '#0369A1', '#7E22CE', '#15803D', '#BE185D', '#0E7490', '#A16207', '#4338CA'], '#FFFFFF'),
+    person: personSet(['#C9356B', '#1F7A8C', '#6A4C93', '#3F7D20', '#2B6CB0'], '#FFFFFF'),
   },
   dark: {
     canvas: '#141715', surface: '#1C201D', surfacePressed: '#2A2F2B', raised: '#272C28', sunken: '#0B0D0C',
@@ -213,7 +217,7 @@ export const schemes: Record<'light' | 'dark', Scheme> = {
       conflict: { fg: '#F39F8E', bg: '#3C231C', border: '#95695D', accent: '#E8907E' },
     },
     // K-65: aynı kişi koyu modda aynı renk ailesinde kalır, aynı hex olmaz.
-    person: personSet(['#D58F5D', '#6CA1EC', '#A99BA9', '#8DA58E', '#C18EC2', '#76AC7B', '#B2999E', '#E7837B'], '#10130F'),
+    person: personSet(['#F08BB0', '#69C3D6', '#B5A2E0', '#9AC97A', '#8FB8F0'], '#10130F'),
   },
 };
 
