@@ -22,13 +22,13 @@ ikinci haftayı yönetemez.
 | `onboarding.tsx` | 3 adım: görünen ad → hane + hayvan → ilk plan | tam (ilk kurulum), sonradan düzenleme yok |
 | `(tabs)/index.tsx` | Bugün: hero, ŞİMDİ kartı, günün satırları | tam (19 Eylül'de yeniden tasarlandı) |
 | `(tabs)/plans.tsx` | Plan listesi | **iskele** — salt okunur, 27 satır |
-| `(tabs)/history.tsx` | Kayıt geçmişi | **iskele** — düz liste, 15 satır, filtre/gruplama yok |
+| `(tabs)/history.tsx` | Kayıt geçmişi | gün grupları + durum filtreleri var (21 Eyl); tarih aralığı yok |
 | `(tabs)/household.tsx` | Hane üyeleri | kısmi — liste var, yönetim yok |
 | `record/[occurrenceId].tsx` | Durum kaydı + çakışma netleştirme | tam |
 | `record/today/[planId].tsx` | Bildirimden gelen kayıt | tam |
 | `invite/[token].tsx` | Daveti kabul etme (davet edilen taraf) | tam |
 | `invite/new.tsx` | Davet oluşturma ve gönderme (davet eden taraf) | tam (QR ve rol/süre seçimi yok) |
-| `paywall.tsx` | Plus önizlemesi | kısmi — 20 satır, üründen görsel yok |
+| `paywall.tsx` | Plus önizlemesi | ücretsiz/Plus ayrımı ve örnek özet var (21 Eyl); satın alma yok |
 | `design-system.tsx` | İç tasarım galerisi | tam (geliştirme aracı, mağazaya çıkmaz) |
 
 ## 3. Eksik ekranlar
@@ -50,7 +50,7 @@ ikinci haftayı yönetemez.
 | **Üye yönetimi** (rol değiştirme, çıkarma, haneden ayrılma) | Hane ekranı salt okunur; yetkiler yazılı değil | B-18, B-19 |
 | **Hesap ve profil ayarları** (ad, e-posta, şifre, çıkış) | Hiçbir ayar ekranı yok; `/settings` 404 | B-43 |
 | **Gizlilik ve KVKK** (aydınlatma, veri dışa aktarma, hesap silme) | Beta kapısının 6. maddesi | B-43, beta kapısı |
-| **Geçmiş: gün gruplama, tarih filtresi** | Geçmiş veterinere gösterilecek hâlde değil | B-38, B-09 |
+| **Geçmiş: tarih aralığı filtresi** — gün gruplama ve durum filtreleri 21 Eyl'de yapıldı | Tarih aralığı ve 30 günlük görünüm hâlâ yok | B-38 kısmen açık · B-09 kapandı |
 | **Paylaşılabilir 30 günlük özet** (isimsiz, süreli link) | Paywall'da satılan özellik üründe yok | B-37, B-39, B-42 |
 
 **P2 — sonraki dalga**
